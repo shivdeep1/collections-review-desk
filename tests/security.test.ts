@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { get } from 'node:http';
 import { harness } from './helpers.ts';
 
 test('case data requires a session and cross-origin writes are rejected', async () => {
@@ -52,7 +53,13 @@ test('a new analysis invalidates approval of the previous analysis even with unc
 test('requests with an external Host header cannot access the local demo service', async () => {
   const h = await harness();
   try {
-    const result = await h.request('/health', 'GET', undefined, { host: 'untrusted-site.example' });
+    // Native fetch normalises Host; use HTTP to exercise the actual incoming header.
+    const result = await new Promise<{ status: number; body: { code: string } }>((resolve, reject) => {
+      get(`${h.base}/api/health`, { headers: { host: 'untrusted-site.example' } }, response => {
+        let data = ''; response.on('data', chunk => { data += chunk; });
+        response.on('end', () => resolve({ status: response.statusCode!, body: JSON.parse(data) }));
+      }).on('error', reject);
+    });
     assert.equal(result.status, 403); assert.equal(result.body.code, 'HOST_REJECTED');
   } finally { await h.close(); }
 });

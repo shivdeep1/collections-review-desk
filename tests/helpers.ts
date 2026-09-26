@@ -43,5 +43,5 @@ export async function harness(options: { model?: ModelAdapter; databasePath?: st
     const result = await request('/session', 'POST', { role });
     assert.equal(result.status, 200); cookie = result.headers.get('set-cookie')!.split(';')[0];
   }
-  return { request, login, close: async () => { await new Promise<void>(resolve => server.close(() => resolve())); close(); } };
+  return { base, request, login, close: async () => { await new Promise<void>(resolve => server.close(() => resolve())); close(); } };
 }
