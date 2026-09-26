@@ -10,4 +10,3 @@ Deliver supported, clean, ambiguous and changed-input demonstrations, a one-slid
 - [x] Live model evaluation reports actual results and limitations.
 - [x] Final code review findings are resolved or disclosed.
 - [x] Working checkpoints are pushed to the private repository.
-

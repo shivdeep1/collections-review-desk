@@ -9,4 +9,3 @@ Deliver proposals, supervisor decisions, follow-up records and audit history.
 - [x] Changed evidence or analysis invalidates an old proposal.
 - [x] Repeated approval creates one action.
 - [x] Saved decisions survive a server restart.
-

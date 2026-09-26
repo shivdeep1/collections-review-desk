@@ -9,4 +9,3 @@ Deliver a case queue and evidence workspace that runs live AI, validates citatio
 - [x] Real model output is grounded in exact quotations.
 - [x] Missing credentials and invalid results have honest errors.
 - [x] The report survives reload.
-
