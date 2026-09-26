@@ -88,7 +88,7 @@ export function SourceEditor({
           <span>
             {item
               ? 'Saving changes creates a new source revision. Existing reports remain in history, and pending approvals become invalid.'
-              : 'Use made-up customer details and conversations only. Reviews send the supplied evidence to Gemini.'}
+              : 'Use made-up customer details and conversations only. Reviews send the supplied evidence to the selected model.'}
           </span>
         </div>
         {!item && (

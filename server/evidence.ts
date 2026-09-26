@@ -17,6 +17,15 @@ export function validateAssessment(raw: unknown, source: Source) {
   if (assessment.recommendedAction === 'dismiss' && assessment.missingEvidence.length > 0) {
     reject('The model recommended closure while also listing unresolved material evidence.');
   }
+  if (
+    assessment.recommendedAction === 'dismiss' &&
+    (assessment.noteAssessment.status === 'contradicted' ||
+      assessment.findings.some((finding) => finding.severity === 'concern'))
+  ) {
+    reject('The model recommended closure despite a supported concern or note contradiction.');
+  }
+  if (assessment.findings.some((finding) => /^none$/i.test(finding.title.trim())))
+    reject('The model returned a placeholder instead of a substantive finding.');
   let validatedCitations = 0;
   function check(citation: Citation) {
     const text =
@@ -92,6 +101,15 @@ export function validateAssessment(raw: unknown, source: Source) {
         'A claimed payment-directory concern had no verified identifier mismatch. Exact spelling must be established before a supported directory finding.',
       );
     }
+  }
+  if (
+    assessment.noteAssessment.status === 'contradicted' &&
+    paymentChecks.some((check) => check.status === 'not_listed') &&
+    assessment.recommendedAction !== 'escalate'
+  ) {
+    reject(
+      'The model did not recommend supervisor investigation despite a contradicted note and an exact destination absent from the complete directory.',
+    );
   }
   return { assessment, paymentChecks, validatedCitations };
 }

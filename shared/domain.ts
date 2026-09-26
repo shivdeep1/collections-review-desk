@@ -205,6 +205,7 @@ export type Health = {
   provider: string;
   model: string;
   configured: boolean;
+  reviewProviders?: { defaultProvider: 'sarvam' | 'gemini'; sarvam: boolean; gemini: boolean };
   syntheticOnly: true;
   bankIntegration: 'simulated';
 };

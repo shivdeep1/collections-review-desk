@@ -2383,6 +2383,16 @@ main {
 .workspace-actions {
   flex-wrap: wrap;
 }
+.review-provider-control {
+  min-width: 146px;
+  font-size: 11px;
+  gap: 3px;
+}
+.review-provider-control select {
+  min-height: 38px;
+  padding: 7px 9px;
+  font-size: 12px;
+}
 @media (prefers-reduced-motion: reduce) {
   *,
   *:before,

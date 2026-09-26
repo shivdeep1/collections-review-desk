@@ -12,9 +12,9 @@ Explain that funded vendors such as Credgenics and Convin already sell into coll
 
 ## 0:45–2:15: Evidence and live review
 
-For the audio version, use the separate **Ravi Mehta · audio demo** case and follow [the audio guide](AUDIO_DEMO.md). Spend about 45 seconds on playback, transcription and accepting the draft, then run the review. The original text-only case is still available.
+For the audio version, use **Ravi Mehta · Sarvam Hinglish** and follow [the audio guide](AUDIO_DEMO.md). The sample's accepted transcript is already in that case. Show playback, the accepted Collector/Customer roles and the corrected payment address, then run a new review with Sarvam 105B. The original text case is separate.
 
-Open Ravi Mehta. Show the collector note first. Then point to the customer at 00:25 refusing to promise payment. Run a new AI review. The actual Gemini request normally takes several seconds. The elapsed indicator is real.
+Open Ravi Mehta. Show the collector note first. Then point to the customer's refusal. Run a new AI review. The selected Sarvam 105B request normally takes several seconds. The elapsed indicator is real. Gemini can be selected manually if Sarvam is unavailable.
 
 The report should identify the note discrepancy and the collector's proposed payment destination. Click a quote to locate it in the transcript. Open the policy tab. Explain that the code checks exact quotations and directory membership; the model interprets the conversation.
 

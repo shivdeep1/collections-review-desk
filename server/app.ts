@@ -16,8 +16,9 @@ import type {
 import { actionSchema, sourceSchema } from '../shared/domain.ts';
 import { Store } from './store.ts';
 import { AppError } from './errors.ts';
-import { createGeminiModel, PROMPT_VERSION } from './model.ts';
+import { PROMPT_VERSION } from './model.ts';
 import type { ModelAdapter } from './model.ts';
+import { reviewProviders } from './review-provider.ts';
 import { validateAssessment } from './evidence.ts';
 import { audioRouter, validateAudioLink } from './audio.ts';
 import type { Transcriber } from './transcription.ts';
@@ -50,7 +51,8 @@ export function createApp(options: {
 }) {
   const store = new Store(options.databasePath);
   const app = express();
-  const model = options.model ?? createGeminiModel();
+  const providers = reviewProviders();
+  const model = options.model ?? providers.model;
   const analysing = new Set<string>();
   function event(
     item: CaseRecord,
@@ -136,7 +138,13 @@ export function createApp(options: {
   app.use('/api', audioRouter(store, actor, event, options.transcribe));
   app.get('/api/session', (req, res) => res.json({ actor: actor(req), demo: true }));
   app.get('/api/health', (_req, res) =>
-    res.json({ ok: true, ...model.info(), syntheticOnly: true, bankIntegration: 'simulated' }),
+    res.json({
+      ok: true,
+      ...model.info(),
+      reviewProviders: providers.availability,
+      syntheticOnly: true,
+      bankIntegration: 'simulated',
+    }),
   );
   app.get('/api/cases', (req, res) => {
     actor(req);
@@ -266,8 +274,11 @@ export function createApp(options: {
   });
   app.post('/api/cases/:id/analyses', async (req, res) => {
     const who = actor(req);
-    const { sourceRevision } = z
-      .object({ sourceRevision: z.number().int().positive() })
+    const { sourceRevision, provider } = z
+      .object({
+        sourceRevision: z.number().int().positive(),
+        provider: z.enum(['sarvam', 'gemini']).optional(),
+      })
       .strict()
       .parse(req.body);
     const item = store.get(req.params.id);
@@ -289,8 +300,33 @@ export function createApp(options: {
     };
     const started = Date.now();
     try {
-      const result = await model.review(source, loanContext);
-      const validated = validateAssessment(result.assessment, source);
+      const selectedProvider = provider || providers.availability.defaultProvider;
+      let feedback = '';
+      let result!: Awaited<ReturnType<ModelAdapter['review']>>;
+      let validated!: ReturnType<typeof validateAssessment>;
+      for (
+        let attempt = 0;
+        attempt < (!options.model && selectedProvider === 'sarvam' ? 2 : 1);
+        attempt++
+      ) {
+        try {
+          result = await model.review(source, loanContext, { provider, feedback });
+          validated = validateAssessment(result.assessment, source);
+          break;
+        } catch (error) {
+          if (
+            attempt === 0 &&
+            !options.model &&
+            selectedProvider === 'sarvam' &&
+            error instanceof AppError &&
+            ['UNGROUNDED_REVIEW', 'MODEL_INCOMPLETE'].includes(error.code)
+          ) {
+            feedback = error.message;
+            continue;
+          }
+          throw error;
+        }
+      }
       const saved = store.transaction(() => {
         const current = store.get(item.id);
         if (current.sourceRevision !== sourceRevision)

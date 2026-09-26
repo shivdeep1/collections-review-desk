@@ -63,6 +63,9 @@ export function Workspace({
   const [audioOpen, setAudioOpen] = useState(false);
   const player = useRef<HTMLAudioElement>(null);
   const [selectedAnalysis, setSelectedAnalysis] = useState<string | null>(null);
+  const [reviewProvider, setReviewProvider] = useState<'sarvam' | 'gemini'>(
+    health?.reviewProviders?.defaultProvider || 'sarvam',
+  );
   const [tab, setTab] = useState<'transcript' | 'policy'>('transcript');
   const [highlight, setHighlight] = useState<Citation | null>(null);
   const latest = item.analyses.at(-1);
@@ -125,7 +128,7 @@ export function Workspace({
     try {
       const result = await api<{ analysis: Analysis }>(`/cases/${item.id}/analyses`, {
         method: 'POST',
-        body: { sourceRevision: item.sourceRevision },
+        body: { sourceRevision: item.sourceRevision, provider: reviewProvider },
       });
       setSelectedAnalysis(null);
       await onRefresh();
@@ -192,6 +195,22 @@ export function Workspace({
           </h1>
         </div>
         <div className="workspace-actions">
+          <label className="review-provider-control">
+            Review model
+            <select
+              aria-label="Review model"
+              value={reviewProvider}
+              disabled={Boolean(busy)}
+              onChange={(e) => setReviewProvider(e.target.value as 'sarvam' | 'gemini')}
+            >
+              <option value="sarvam" disabled={!health?.reviewProviders?.sarvam}>
+                Sarvam 105B
+              </option>
+              <option value="gemini" disabled={!health?.reviewProviders?.gemini}>
+                Gemini backup
+              </option>
+            </select>
+          </label>
           <button
             className="button secondary"
             disabled={Boolean(busy)}
@@ -206,7 +225,9 @@ export function Workspace({
           <button
             className="button primary"
             onClick={runReview}
-            disabled={Boolean(busy) || !health?.configured}
+            disabled={
+              Boolean(busy) || !(health?.reviewProviders?.[reviewProvider] ?? health?.configured)
+            }
           >
             {busy === 'analysis' ? (
               <Spinner label={`Reviewing · ${elapsed}s`} />
@@ -260,8 +281,8 @@ export function Workspace({
       )}
       {!health?.configured && (
         <div className="notice">
-          Live AI is not configured. Add the Gemini key to the server .env file and restart. Reports
-          are never replaced with prewritten answers.
+          Live AI is not configured. Add a review-model key to the server .env file and restart.
+          Reports are never replaced with prewritten answers.
         </div>
       )}
       {analysis && !current && (
@@ -484,8 +505,9 @@ export function Workspace({
                 </div>
                 <h3>Reviewing the conversation</h3>
                 <p>
-                  Gemini is comparing the transcript, case note and supplied policy. Exact source
-                  references are checked before the report is saved.
+                  {reviewProvider === 'sarvam' ? 'Sarvam' : 'Gemini'} is comparing the transcript,
+                  case note and supplied policy. Exact source references are checked before the
+                  report is saved.
                 </p>
                 <Spinner label={`${elapsed}s elapsed`} />
                 <span className="field-hint">A real model request is in progress.</span>
@@ -642,7 +664,10 @@ export function Workspace({
                 <button
                   className="button primary"
                   onClick={runReview}
-                  disabled={Boolean(busy) || !health?.configured}
+                  disabled={
+                    Boolean(busy) ||
+                    !(health?.reviewProviders?.[reviewProvider] ?? health?.configured)
+                  }
                 >
                   <Play size={14} />
                   Run AI review

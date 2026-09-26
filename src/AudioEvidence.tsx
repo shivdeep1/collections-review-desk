@@ -40,6 +40,8 @@ export function AudioEvidence({
   const [languageCode, setLanguageCode] = useState('unknown');
   const recording = media.recordings.find((r) => r.id === selected);
   const draft = media.transcriptions.filter((d) => d.recordingId === selected).at(-1);
+  const adopted = Boolean(draft && item.source.audio?.transcriptionId === draft.id);
+  const sampleRecording = recording?.fileName === 'sarvam-hinglish-call.wav';
   useEffect(() => {
     let live = true;
     api<Media>(`/cases/${item.id}/recordings`)
@@ -47,7 +49,10 @@ export function AudioEvidence({
         if (!live) return;
         setMedia(data);
         if (data.providers) setProvider(data.providers.defaultProvider);
-        setSelected(item.source.audio?.recordingId || data.recordings.at(-1)?.id || '');
+        const chosen = item.source.audio?.recordingId || data.recordings.at(-1)?.id || '';
+        setSelected(chosen);
+        if (data.recordings.find((r) => r.id === chosen)?.fileName === 'sarvam-hinglish-call.wav')
+          setLanguageCode('hi-IN');
       })
       .catch((err) => {
         if (live) setError(err.message);
@@ -57,10 +62,24 @@ export function AudioEvidence({
     };
   }, [item.id]);
   useEffect(() => {
-    setText(draft?.turns.map((t) => `[${t.time}] ${t.speaker}: ${t.text}`).join('\n') || '');
+    setText(
+      draft && item.source.audio?.transcriptionId === draft.id
+        ? item.source.transcript.map((t) => `[${t.time}] ${t.speaker}: ${t.text}`).join('\n')
+        : draft?.turns.map((t) => `[${t.time}] ${t.speaker}: ${t.text}`).join('\n') || '',
+    );
     setChecked(false);
-    setRoles({});
-    setEdited(false);
+    setRoles(
+      draft && item.source.audio?.transcriptionId === draft.id
+        ? Object.fromEntries(
+            draft.turns.flatMap((t, i) =>
+              t.speakerId === undefined
+                ? []
+                : [[t.speakerId, item.source.transcript[i]?.speaker || 'Unknown']],
+            ),
+          )
+        : {},
+    );
+    setEdited(Boolean(draft && item.source.audio?.transcriptionId === draft.id));
   }, [draft?.id, selected]);
 
   async function upload(chosen: File) {
@@ -102,8 +121,9 @@ export function AudioEvidence({
         <div className="notice">
           <FileAudio size={20} />
           <span>
-            Upload a synthetic call, choose a speech model, then inspect the draft before using it
-            for a review. Uploading alone leaves your current transcript unchanged.
+            Working on {item.customer}, source revision {item.sourceRevision}. Upload and
+            transcription create a separate draft. Only “Use transcript for review” changes this
+            case’s conversation. “Run AI review” then analyses the current conversation.
           </span>
         </div>
         <section className="audio-upload">
@@ -187,7 +207,11 @@ export function AudioEvidence({
               <select
                 value={selected}
                 disabled={Boolean(busy)}
-                onChange={(e) => setSelected(e.target.value)}
+                onChange={(e) => {
+                  setSelected(e.target.value);
+                  const fileName = media.recordings.find((r) => r.id === e.target.value)?.fileName;
+                  setLanguageCode(fileName === 'sarvam-hinglish-call.wav' ? 'hi-IN' : 'unknown');
+                }}
               >
                 {media.recordings.map((r) => (
                   <option key={r.id} value={r.id}>
@@ -288,9 +312,15 @@ export function AudioEvidence({
                   <div className="notice warning">
                     <div>
                       <p>
-                        Listen to each speaker before assigning a role. Unknown is allowed. Assign
-                        roles before editing words; later changes can be made directly in the draft.
+                        Saaras identifies voices, not their bank roles. Listen, then assign
+                        Collector and Customer. Unknown is allowed. Set roles before editing words.
                       </p>
+                      {sampleRecording && (
+                        <p>
+                          In this included sample, Speaker 2 introduces Amit as the collector;
+                          Speaker 1 disputes the amount as the customer. Confirm by listening.
+                        </p>
+                      )}
                       {[
                         ...new Set(
                           draft.turns.flatMap((t) =>
@@ -335,6 +365,12 @@ export function AudioEvidence({
                   {draft.model} · {(draft.latencyMs / 1000).toFixed(1)}s · AI-generated text and
                   approximate timestamps. This is not a verified transcript.
                 </p>
+                {adopted && (
+                  <div className="notice">
+                    This draft is already linked to the current case revision. The text below
+                    includes your accepted speaker roles and corrections.
+                  </div>
+                )}
                 <div className="notice warning">
                   Check payment-address spelling, amounts and negation against playback. A
                   transcript can normalise or mishear spoken words.
@@ -394,8 +430,10 @@ export function AudioEvidence({
                   Use transcript for review
                 </button>
                 <p className="field-hint">
-                  This saves a new source revision and invalidates pending approvals. The collector
-                  note remains unchanged. Run a new AI review after saving.
+                  This replaces this case’s current conversation with your checked text and links
+                  the recording. It creates a new source revision and invalidates pending approvals.
+                  The collector’s case note stays as written so the review can compare it with the
+                  conversation. Run a new AI review after saving.
                 </p>
               </>
             )}

@@ -26,6 +26,24 @@ const invalidOutputs: { name: string; change: (a: Assessment) => void }[] = [
     },
   },
   {
+    name: 'closure despite a supported concern',
+    change: (a) => {
+      a.recommendedAction = 'dismiss';
+    },
+  },
+  {
+    name: 'request for information despite two supported concerns',
+    change: (a) => {
+      a.recommendedAction = 'request_information';
+    },
+  },
+  {
+    name: 'a placeholder finding',
+    change: (a) => {
+      a.findings[0].title = 'None';
+    },
+  },
+  {
     name: 'invented quotation',
     change: (a) => {
       a.findings[0].citations[0].quote = 'I definitely promise to pay everything now.';

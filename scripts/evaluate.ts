@@ -1,7 +1,9 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { createGeminiModel, PROMPT_VERSION } from '../server/model.ts';
+import { PROMPT_VERSION } from '../server/model.ts';
+import { reviewProviders } from '../server/review-provider.ts';
 import { validateAssessment } from '../server/evidence.ts';
 import { seedCases } from '../server/fixtures.ts';
+import { AppError } from '../server/errors.ts';
 
 // Expected outcomes are held here, never in the model request or application fixtures.
 const seeds = seedCases();
@@ -37,20 +39,41 @@ const scenarios = [
     expected: { note: 'supported', payment: 'listed', action: 'dismiss' },
   },
 ];
-const model = createGeminiModel();
+const model = reviewProviders().model;
 const results: unknown[] = [];
 let failed = false;
-for (const scenario of scenarios) {
+for (const scenario of scenarios.filter((s) => !process.argv[2] || s.name === process.argv[2])) {
   const started = Date.now();
   try {
     const item = seeds[scenarios.indexOf(scenario)] || seeds[0];
-    const result = await model.review(scenario.source, {
+    const loanContext = {
       loanType: item.loanType,
       overdueAmount: item.overdueAmount,
       daysPastDue: item.daysPastDue,
-      currency: 'INR',
-    });
-    const validated = validateAssessment(result.assessment, scenario.source);
+      currency: 'INR' as const,
+    };
+    let result!: Awaited<ReturnType<typeof model.review>>;
+    let validated!: ReturnType<typeof validateAssessment>;
+    let attempts = 0;
+    let feedback = '';
+    for (let attempt = 0; attempt < 2; attempt++) {
+      attempts++;
+      try {
+        result = await model.review(scenario.source, loanContext, { feedback });
+        validated = validateAssessment(result.assessment, scenario.source);
+        break;
+      } catch (error) {
+        if (
+          attempt === 0 &&
+          error instanceof AppError &&
+          ['UNGROUNDED_REVIEW', 'MODEL_INCOMPLETE'].includes(error.code)
+        ) {
+          feedback = error.message;
+          continue;
+        }
+        throw error;
+      }
+    }
     const checks = {
       note:
         !scenario.expected.note ||
@@ -78,6 +101,7 @@ for (const scenario of scenarios) {
       model: result.model,
       passed,
       latencyMs: Date.now() - started,
+      attempts,
       checks,
       ...validated,
     };
@@ -92,6 +116,7 @@ for (const scenario of scenarios) {
         findings: validated.assessment.findings.length,
         validatedCitations: validated.validatedCitations,
         latencyMs: record.latencyMs,
+        attempts,
       }),
     );
   } catch (error) {

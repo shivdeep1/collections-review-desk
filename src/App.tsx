@@ -203,7 +203,7 @@ export function App() {
           </div>
           <span className={`connection ${health?.configured ? '' : 'offline'}`}>
             <i />
-            {health?.configured ? 'Gemini configured' : 'Model not configured'}
+            {health?.configured ? `${health.provider} configured` : 'Model not configured'}
           </span>
         </header>
         <main>
@@ -469,8 +469,8 @@ export function App() {
             </p>
             <ol>
               <li>
-                <strong>Run the review.</strong> Gemini reads the supplied transcript, note, policy
-                and directory.
+                <strong>Run the review.</strong> The selected model reads the supplied transcript,
+                note, policy and directory.
               </li>
               <li>
                 <strong>Inspect the quotes.</strong> Click a source reference to find the original
@@ -495,8 +495,8 @@ export function App() {
             </ol>
             <div className="notice">
               Working: live analysis, citation checks, versioned reviews, approval permissions,
-              persistence, audio upload, Gemini transcription, playback and export. Simulated:
-              personas and bank follow-up queues. Live calling is not part of this build.
+              persistence, audio upload, Sarvam or Gemini transcription, playback and export.
+              Simulated: personas and bank follow-up queues. Live calling is not part of this build.
             </div>
             <a className="button secondary" href="/pitch.html" target="_blank" rel="noreferrer">
               Open one-slide pitch

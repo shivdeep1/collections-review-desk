@@ -9,7 +9,7 @@ Requires Node.js 24 or later. SQLite is built into Node, so no database service 
 ```powershell
 npm ci
 Copy-Item .env.example .env
-# Add Gemini and Sarvam keys to .env. Keep keys on the server.
+# Add a Sarvam key to .env; a Gemini key enables the manual backup. Keep keys on the server.
 npm run build
 npm start
 ```
@@ -22,7 +22,7 @@ For development, use `npm run dev`. It watches server changes. Run `npm run buil
 
 - A queue of three synthetic cases, plus custom case creation and `.txt` transcript import.
 - Synthetic WAV/MP3 upload, locally saved recordings, real Sarvam or Gemini transcription drafts, reviewer acceptance and timestamp-linked playback. Included recordings cover English with Windows voices and a 42-second Hindi-English call with Sarvam Bulbul voices.
-- Live Gemini analysis of the transcript, collector note, loan context, versioned policy and payment directory. No case-ID-based verdicts or offline answer substitution.
+- Live Sarvam 105B analysis of the transcript, collector note, loan context, versioned policy and payment directory. A visible selector offers Gemini as a manual backup. No case-ID-based verdicts or offline answer substitution.
 - Exact quote and supplied-policy-reference validation. Invalid model output cannot become a saved report.
 - Deterministic payment-destination comparison with an explicit unavailable/incomplete directory outcome.
 - Editable evidence and policy, retained source revisions, immutable review snapshots and report history.
@@ -39,7 +39,7 @@ Nisha Shah's call supports its case note. Farah Khan's call lacks earlier eviden
 
 See [the seven-minute demo script](docs/DEMO.md), [deployment boundaries](docs/DEPLOYMENT.md) and [the one-slide pitch](public/pitch.html).
 
-For the audio workflow, follow [the audio demo guide](docs/AUDIO_DEMO.md). Set `TRANSCRIPTION_PROVIDER=sarvam` and `SARVAM_API_KEY` to use Saaras v4 batch transcription. The UI also offers Gemini transcription when its key is present. Sarvam uses paid credits; no provider fallback is automatic. Set the known recording language and map speaker IDs to roles before accepting a draft. See [research and limitations](docs/SARVAM_RESEARCH.md).
+For the audio workflow, follow [the audio demo guide](docs/AUDIO_DEMO.md). Set `TRANSCRIPTION_PROVIDER=sarvam`, `REVIEW_PROVIDER=sarvam` and `SARVAM_API_KEY` to use Saaras v4 transcription and Sarvam 105B review. The UI offers Gemini as a manually selected backup where its key is present. No provider fallback is automatic. Set the known recording language and map speaker IDs to roles before accepting a draft. See [research and limitations](docs/SARVAM_RESEARCH.md).
 
 ## Verify
 
@@ -49,9 +49,9 @@ npm run build
 npm run test:live
 ```
 
-The regular tests run against the public HTTP API, real temporary SQLite databases and a model test double. They need no key and make no provider calls. The live evaluation makes four requests to the configured model and writes `docs/verification/live-evaluation.json`. A four-case check does not establish production accuracy. See [verification notes](docs/verification/RESULTS.md).
+The regular tests run against the public HTTP API, real temporary SQLite databases and a model test double. They need no key and make no provider calls. The live evaluation checks four scenarios against the configured model and writes `docs/verification/live-evaluation.json`. A Sarvam response rejected by evidence validation gets one Sarvam retry, so this can make up to eight requests. A four-case check does not establish production accuracy. See [verification notes](docs/verification/RESULTS.md).
 
-Gemini 3.5 Flash-Lite and Gemini 3.1 Flash-Lite are listed as free-tier eligible by [Google](https://ai.google.dev/gemini-api/docs/pricing). Earlier review runs reached all four expected outcomes, with one targeted retry after a timeout. Current results and failed requests are recorded in the verification notes. The earlier 3 Flash Preview model passed before later returning 503 errors; 2.5 Flash exhausted its daily free quota. Those earlier records remain in verification history. The key's project determines quota and billing. This app neither enables billing nor silently switches models. Provider errors remain explicit. Use synthetic data only with this prototype.
+Sarvam 105B review and Saaras transcription use your Sarvam credits. Gemini remains a manual backup. Earlier Gemini results and current Sarvam results are recorded in the verification notes. This app neither enables billing nor silently switches models. Provider errors remain explicit. Use synthetic data only with this prototype.
 
 ## Files and backups
 
