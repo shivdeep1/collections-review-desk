@@ -159,6 +159,7 @@ export function createApp(options: {
               ? latest.assessment.findings.length
               : null,
           currentAnalysis: latest?.sourceRevision === item.sourceRevision,
+          audioDerived: Boolean(item.source.audio),
           latestAction: decisions.at(-1)?.action ?? null,
         } satisfies CaseSummary;
       }),
@@ -485,12 +486,10 @@ export function createApp(options: {
   });
   app.use((error: unknown, _req: Request, res: Response, _next: NextFunction) => {
     if (error && typeof error === 'object' && 'type' in error && error.type === 'entity.too.large')
-      return res
-        .status(413)
-        .json({
-          code: 'UPLOAD_TOO_LARGE',
-          message: 'The upload exceeds the size limit. Use a WAV or MP3 recording up to 6 MB.',
-        });
+      return res.status(413).json({
+        code: 'UPLOAD_TOO_LARGE',
+        message: 'The upload exceeds the size limit. Use a WAV or MP3 recording up to 6 MB.',
+      });
     if (error instanceof z.ZodError)
       return res.status(400).json({
         code: 'INVALID_INPUT',

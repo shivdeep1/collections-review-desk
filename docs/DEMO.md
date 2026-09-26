@@ -12,6 +12,8 @@ Explain that funded vendors such as Credgenics and Convin already sell into coll
 
 ## 0:45–2:15: Evidence and live review
 
+For the audio version, use the separate **Ravi Mehta · audio demo** case and follow [the audio guide](AUDIO_DEMO.md). Spend about 45 seconds on playback, transcription and accepting the draft, then run the review. The original text-only case is still available.
+
 Open Ravi Mehta. Show the collector note first. Then point to the customer at 00:25 refusing to promise payment. Run a new AI review. The actual Gemini request normally takes several seconds. The elapsed indicator is real.
 
 The report should identify the note discrepancy and the collector's proposed payment destination. Click a quote to locate it in the transcript. Open the policy tab. Explain that the code checks exact quotations and directory membership; the model interprets the conversation.

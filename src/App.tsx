@@ -354,7 +354,9 @@ export function App() {
                           </td>
                           <td>
                             <span className="language">{c.language}</span>
-                            <span className="case-subtitle">Supplied transcript</span>
+                            <span className="case-subtitle">
+                              {c.audioDerived ? 'Audio-derived transcript' : 'Supplied transcript'}
+                            </span>
                           </td>
                           <td>
                             <Status status={c.status} />
@@ -493,8 +495,8 @@ export function App() {
             </ol>
             <div className="notice">
               Working: live analysis, citation checks, versioned reviews, approval permissions,
-              persistence and export. Simulated: personas and bank follow-up queues. Audio
-              transcription and live calling are not part of this build.
+              persistence, audio upload, Gemini transcription, playback and export. Simulated:
+              personas and bank follow-up queues. Live calling is not part of this build.
             </div>
             <a className="button secondary" href="/pitch.html" target="_blank" rel="noreferrer">
               Open one-slide pitch

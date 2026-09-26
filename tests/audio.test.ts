@@ -64,6 +64,14 @@ test('audio upload and drafts persist, support seeking and require explicit adop
     assert.equal(range.status, 206);
     assert.equal(range.headers.get('content-range'), 'bytes 0-11/100');
     assert.deepEqual(range.body, wave.subarray(0, 12));
+    const oversized = await h.request(`${path}/content`, 'GET', undefined, {
+      range: 'bytes=0-999999',
+    });
+    assert.equal(oversized.status, 206);
+    assert.deepEqual(oversized.body, wave);
+    const suffix = await h.request(`${path}/content`, 'GET', undefined, { range: 'bytes=-12' });
+    assert.equal(suffix.status, 206);
+    assert.deepEqual(suffix.body, wave.subarray(88));
     assert.equal(
       (await h.request(`${path}/content`, 'GET', undefined, { range: 'bytes=999-' })).status,
       416,

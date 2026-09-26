@@ -9,7 +9,7 @@ Requires Node.js 24 or later. SQLite is built into Node, so no database service 
 ```powershell
 npm ci
 Copy-Item .env.example .env
-# Add your Gemini key to .env. Keep GEMINI_MODEL=gemini-3-flash-preview.
+# Add your Gemini key to .env. Keep GEMINI_MODEL=gemini-3.5-flash-lite.
 npm run build
 npm start
 ```
@@ -21,6 +21,7 @@ For development, use `npm run dev`. It watches server changes. Run `npm run buil
 ## What works
 
 - A queue of three synthetic cases, plus custom case creation and `.txt` transcript import.
+- Synthetic WAV/MP3 upload, locally saved recordings, real Gemini transcription drafts, reviewer acceptance and timestamp-linked playback. An included 53-second fictional recording is ready to use.
 - Live Gemini analysis of the transcript, collector note, loan context, versioned policy and payment directory. No case-ID-based verdicts or offline answer substitution.
 - Exact quote and supplied-policy-reference validation. Invalid model output cannot become a saved report.
 - Deterministic payment-destination comparison with an explicit unavailable/incomplete directory outcome.
@@ -28,7 +29,7 @@ For development, use `npm run dev`. It watches server changes. Run `npm run buil
 - Reviewer proposals, supervisor approval, transactional case updates and follow-up records. Changed evidence, reports or proposals invalidate pending approval. Duplicate requests create one action.
 - SQLite persistence, an audit timeline and JSON export of evidence and decisions.
 
-The sidebar deliberately allows switching between two **demo personas**. The API enforces the chosen session role, but this is not enterprise authentication. Bank follow-up queues are local simulations. The app analyses supplied transcripts, not audio. It does not send messages, move money or determine misconduct.
+The sidebar deliberately allows switching between two **demo personas**. The API enforces the chosen session role, but this is not enterprise authentication. Bank follow-up queues are local simulations. Gemini can transcribe an uploaded recording; the collections review then analyses the accepted text. Exact-quote checks validate text, not the accuracy of speech recognition. The app does not send messages, move money or determine misconduct.
 
 ## Demonstrate it
 
@@ -37,6 +38,8 @@ Open Ravi Mehta's case and click **Run AI review**. Inspect the customer's refus
 Nisha Shah's call supports its case note. Farah Khan's call lacks earlier evidence. For changed-input testing, edit a transcript or policy and run a new review. Earlier reports remain available with their original evidence.
 
 See [the seven-minute demo script](docs/DEMO.md), [deployment boundaries](docs/DEPLOYMENT.md) and [the one-slide pitch](public/pitch.html).
+
+For the audio workflow, follow [the audio demo guide](docs/AUDIO_DEMO.md). Transcription uses `GEMINI_TRANSCRIPTION_MODEL`, defaulting to the free-tier eligible `gemini-3.1-flash-lite`. It is a separate model request from the collections review.
 
 ## Verify
 
@@ -48,7 +51,7 @@ npm run test:live
 
 The regular tests run against the public HTTP API, real temporary SQLite databases and a model test double. They need no key and make no provider calls. The live evaluation makes four requests to the configured model and writes `docs/verification/live-evaluation.json`. A four-case check does not establish production accuracy. See [verification notes](docs/verification/RESULTS.md).
 
-Gemini 3 Flash Preview is listed as free-tier eligible by [Google](https://ai.google.dev/gemini-api/docs/pricing). It passed the final four-case evaluation on this key. The earlier 2.5 Flash model exhausted its 20-request daily free quota during development. The key's project determines quota and billing. This app neither enables billing nor silently switches models. Rate limits produce an explicit error. Use synthetic data only with this prototype.
+Gemini 3.5 Flash-Lite and Gemini 3.1 Flash-Lite are listed as free-tier eligible by [Google](https://ai.google.dev/gemini-api/docs/pricing). The review model produced the expected behavior on all four synthetic scenarios, with one targeted retry after a timeout. The earlier 3 Flash Preview model passed before later returning 503 errors; 2.5 Flash exhausted its daily free quota. Those earlier records remain in verification history. The key's project determines quota and billing. This app neither enables billing nor silently switches models. Provider errors remain explicit. Use synthetic data only with this prototype.
 
 ## Files and backups
 

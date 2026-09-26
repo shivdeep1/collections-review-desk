@@ -859,7 +859,10 @@ export function Workspace({
       {audioOpen && (
         <AudioEvidence
           item={item}
-          onClose={() => setAudioOpen(false)}
+          onClose={() => {
+            setAudioOpen(false);
+            void onRefresh().catch((err) => setError(err.message));
+          }}
           onAdopt={async (nextSource) => {
             await api(`/cases/${item.id}/source`, {
               method: 'PUT',

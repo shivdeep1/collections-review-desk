@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { geminiSchema } from './gemini-schema.ts';
 import { assessmentSchema } from '../shared/domain.ts';
 import type { Source, LoanContext } from '../shared/domain.ts';
 import { AppError } from './errors.ts';
@@ -23,7 +23,7 @@ If material evidence is missing, say exactly what would resolve the question. Li
 export function createGeminiModel(): ModelAdapter {
   const getInfo = () => ({
     provider: 'Gemini',
-    model: process.env.GEMINI_MODEL || 'gemini-3-flash-preview',
+    model: process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite',
     configured: Boolean(process.env.GEMINI_API_KEY?.trim()),
   });
   return {
@@ -37,16 +37,7 @@ export function createGeminiModel(): ModelAdapter {
           'MODEL_NOT_CONFIGURED',
           'Add GEMINI_API_KEY to the server .env file and restart the app. No analysis has been generated.',
         );
-      const schema = z.toJSONSchema(assessmentSchema);
-      delete schema.$schema;
-      // Keep generation constraints small; enforce every length bound on the server.
-      function simplify(value: unknown): void {
-        if (!value || typeof value !== 'object') return;
-        const object = value as Record<string, unknown>;
-        for (const key of ['minLength', 'maxLength', 'minItems', 'maxItems']) delete object[key];
-        Object.values(object).forEach(simplify);
-      }
-      simplify(schema);
+      const schema = geminiSchema(assessmentSchema);
       let response: globalThis.Response;
       try {
         response = await fetch(

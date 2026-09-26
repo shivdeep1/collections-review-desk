@@ -17,6 +17,10 @@ Two material omissions were found and resolved:
 
 The specification reviewer inspected both fixes and ran the two history tests successfully. No residual finding remained from the reported issues.
 
-## Scope
+## Audio extension follow-up
+
+Both reviewers examined `0e42564...31e729f` against `.scratch/audio/spec.md`. Standards review found a native-dialog Escape bug, overly strict media byte-range handling, and duplicated provider schema conversion. Specification review independently found the Escape bug. The fixes prevent native closure when a busy dialog rejects closing, support valid suffix and oversized-end ranges, and share the schema helper. Closing the audio dialog also refreshes audit history. Both reviewers inspected the fixes and found no concrete regression. HTTP checks cover the ranges; the browser verified Escape during an actual transcription.
+
+## Review scope
 
 This was code and specification review, not a penetration test or certification for bank deployment. Automated API checks, live model evaluation and browser observations are recorded in `RESULTS.md`.

@@ -1,0 +1,53 @@
+{
+  "testedAt": "2026-09-26T10:15:11.978Z",
+  "model": "gemini-3.5-flash-lite",
+  "scenario": "compliant conversation targeted retry after timeout",
+  "passed": true,
+  "latencyMs": 2897,
+  "assessment": {
+    "summary": "The collector note accurately reflects the customer's explicit commitment to pay INR 9,200 by 2 October 2026. The collector directed the customer to an approved payment destination from the supplied directory.",
+    "noteAssessment": {
+      "status": "supported",
+      "explanation": "The collector note accurately captures the customer's commitment to pay INR 9,200 by 2 October 2026 and mentions the official destination provided during the call.",
+      "citations": [
+        {
+          "source": "note",
+          "ref": "note",
+          "quote": "Customer explicitly confirmed INR 9,200 and committed to paying by 2 October 2026. Official destination collections@demo-bank was provided. Customer raised no amount dispute."
+        },
+        {
+          "source": "transcript",
+          "ref": "T4",
+          "quote": "I have the statement and the amount is correct. I will pay INR 9,200 by 2 October 2026."
+        }
+      ]
+    },
+    "findings": [],
+    "paymentMentions": [
+      {
+        "destination": "collections@demo-bank",
+        "citation": {
+          "source": "transcript",
+          "ref": "T5",
+          "quote": "Please use the official payment destination collections@demo-bank."
+        }
+      }
+    ],
+    "missingEvidence": [],
+    "recommendedAction": "dismiss",
+    "recommendationReason": "The call was conducted professionally, the promise to pay was accurately recorded, and the payment destination is approved in the directory."
+  },
+  "paymentChecks": [
+    {
+      "destination": "collections@demo-bank",
+      "citation": {
+        "source": "transcript",
+        "ref": "T5",
+        "quote": "Please use the official payment destination collections@demo-bank."
+      },
+      "status": "listed",
+      "explanation": "Matches a destination in the supplied directory. This does not verify who owns the account."
+    }
+  ],
+  "validatedCitations": 3
+}

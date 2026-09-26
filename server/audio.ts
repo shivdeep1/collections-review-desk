@@ -111,10 +111,17 @@ export function audioRouter(
     res.setHeader('Accept-Ranges', 'bytes');
     const range = req.headers.range;
     if (range) {
-      const match = /^bytes=(\d+)-(\d*)$/.exec(range);
-      const start = match ? Number(match[1]) : -1;
-      const end = match?.[2] ? Number(match[2]) : length - 1;
-      if (start < 0 || start >= length || end < start || end >= length)
+      const match = /^bytes=(\d*)-(\d*)$/.exec(range);
+      const suffix = match && !match[1] && match[2] ? Number(match[2]) : 0;
+      const start = suffix > 0 ? Math.max(0, length - suffix) : match?.[1] ? Number(match[1]) : -1;
+      const end = suffix > 0 || !match?.[2] ? length - 1 : Math.min(Number(match[2]), length - 1);
+      if (
+        !Number.isSafeInteger(start) ||
+        !Number.isSafeInteger(end) ||
+        start < 0 ||
+        start >= length ||
+        end < start
+      )
         return res.status(416).setHeader('Content-Range', `bytes */${length}`).end();
       res.status(206).setHeader('Content-Range', `bytes ${start}-${end}/${length}`);
       res.setHeader('Content-Length', end - start + 1);

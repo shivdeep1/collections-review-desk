@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { geminiSchema } from './gemini-schema.ts';
 import { transcriptionSchema, timestampSeconds } from '../shared/audio.ts';
 import { AppError } from './errors.ts';
 
@@ -15,16 +15,7 @@ export const transcribeAudio: Transcriber = async (bytes, mimeType) => {
       'MODEL_NOT_CONFIGURED',
       'Configure Gemini before transcribing. Your recording is saved locally.',
     );
-  const schema = z.toJSONSchema(transcriptionSchema);
-  delete schema.$schema;
-  function simplify(value: unknown) {
-    if (!value || typeof value !== 'object') return;
-    const obj = value as Record<string, unknown>;
-    for (const field of ['minLength', 'maxLength', 'minItems', 'maxItems', 'pattern'])
-      delete obj[field];
-    Object.values(obj).forEach(simplify);
-  }
-  simplify(schema);
+  const schema = geminiSchema(transcriptionSchema);
   let response: Response;
   try {
     response = await fetch(

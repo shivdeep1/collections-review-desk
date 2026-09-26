@@ -1,6 +1,6 @@
 # Collections Review Desk
 
-Status: ready-for-agent
+Status: implemented and verified locally. See docs/verification/RESULTS.md for checks and limits.
 
 ## Problem statement
 

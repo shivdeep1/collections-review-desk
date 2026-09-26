@@ -18,7 +18,7 @@ Measure the percentage of quoted evidence that is valid, missed material concern
 
 1. Replace demo personas with the bank's SSO and verified roles. Decide whether a proposer may approve their own proposal. Apply tenant and case-level access control.
 2. Use a bank-approved model deployment, data-processing terms, region and retention policy. This free-tier Gemini prototype is for synthetic data only.
-3. Connect actual call recordings and transcript provenance. Validate speech recognition separately before treating a transcript as authoritative evidence.
+3. Connect the bank's approved recording source. The prototype already retains uploaded synthetic recordings and draft provenance. Validate speech recognition separately on the bank's languages, accents and call quality before relying on those transcripts.
 4. Integrate a maintained policy store and payment directory, with ownership and completeness defined by the bank.
 5. Replace the local follow-up simulation with an authenticated case-management connector and durable execution queue. Keep version binding and idempotency across that boundary.
 6. Add encrypted storage, retention and deletion controls, immutable audit export, monitoring, backup restoration, operational access controls and load testing.

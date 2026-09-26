@@ -197,6 +197,7 @@ export type CaseSummary = Omit<
 > & {
   findingCount: number | null;
   currentAnalysis: boolean;
+  audioDerived: boolean;
   latestAction: Action | null;
 };
 export type Health = {
