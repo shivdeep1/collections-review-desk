@@ -2,12 +2,12 @@ import express from 'express';
 import type { Request } from 'express';
 import { randomUUID, createHash } from 'node:crypto';
 import { z } from 'zod';
-import { AUDIO_MAX_BYTES } from '../shared/audio.ts';
+import { AUDIO_MAX_BYTES, speechOptionsSchema } from '../shared/audio.ts';
 import type { Recording, Transcription } from '../shared/audio.ts';
 import type { Actor, CaseRecord, Source } from '../shared/domain.ts';
 import type { Store } from './store.ts';
 import { AppError } from './errors.ts';
-import { transcribeAudio, validateTranscription } from './transcription.ts';
+import { transcribeAudio, validateTranscription, transcriptionProviders } from './transcription.ts';
 import type { Transcriber } from './transcription.ts';
 
 export function validateAudioLink(store: Store, caseId: string, source: Source) {
@@ -42,6 +42,7 @@ export function audioRouter(
     res.json({
       recordings: store.recordings(req.params.id),
       transcriptions: store.transcriptions(req.params.id),
+      providers: transcriptionProviders(),
     });
   });
   router.post('/cases/:id/recordings', (req, res) => {
@@ -134,6 +135,7 @@ export function audioRouter(
     const who = actor(req);
     const recording = store.recording(req.params.id, req.params.recordingId);
     const key = recording.metadata.id;
+    const options = speechOptionsSchema.parse(req.body);
     if (active.has(key))
       throw new AppError(
         409,
@@ -143,7 +145,7 @@ export function audioRouter(
     active.add(key);
     const start = Date.now();
     try {
-      const result = await transcribe(recording.bytes, recording.metadata.mimeType);
+      const result = await transcribe(recording.bytes, recording.metadata.mimeType, options);
       const draft: Transcription = {
         ...validateTranscription(result.output),
         id: randomUUID(),

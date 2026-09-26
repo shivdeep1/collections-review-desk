@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { FileAudio, Upload, Play, Check, Download } from 'lucide-react';
 import type { CaseRecord, Source } from '../shared/domain';
 import { parseTranscript, sourceSchema } from '../shared/domain';
-import { AUDIO_MAX_BYTES } from '../shared/audio';
+import { AUDIO_MAX_BYTES, speechLanguages } from '../shared/audio';
 import type { Recording, Transcription } from '../shared/audio';
 import { api } from './api';
 import { Modal, Spinner } from './components';
@@ -10,7 +10,11 @@ import { Modal, Spinner } from './components';
 export function recordingUrl(caseId: string, id: string) {
   return `/api/cases/${encodeURIComponent(caseId)}/recordings/${encodeURIComponent(id)}/content`;
 }
-type Media = { recordings: Recording[]; transcriptions: Transcription[] };
+type Media = {
+  recordings: Recording[];
+  transcriptions: Transcription[];
+  providers?: { defaultProvider: 'gemini' | 'sarvam'; sarvam: boolean; gemini: boolean };
+};
 
 export function AudioEvidence({
   item,
@@ -29,6 +33,11 @@ export function AudioEvidence({
   const [text, setText] = useState('');
   const [busy, setBusy] = useState('');
   const [error, setError] = useState('');
+  const [provider, setProvider] = useState<'gemini' | 'sarvam'>('gemini');
+  const [roles, setRoles] = useState<Record<string, 'Collector' | 'Customer' | 'Unknown'>>({});
+  const [edited, setEdited] = useState(false);
+  const [sample, setSample] = useState('sarvam-hinglish-call.wav');
+  const [languageCode, setLanguageCode] = useState('unknown');
   const recording = media.recordings.find((r) => r.id === selected);
   const draft = media.transcriptions.filter((d) => d.recordingId === selected).at(-1);
   useEffect(() => {
@@ -37,6 +46,7 @@ export function AudioEvidence({
       .then((data) => {
         if (!live) return;
         setMedia(data);
+        if (data.providers) setProvider(data.providers.defaultProvider);
         setSelected(item.source.audio?.recordingId || data.recordings.at(-1)?.id || '');
       })
       .catch((err) => {
@@ -49,6 +59,8 @@ export function AudioEvidence({
   useEffect(() => {
     setText(draft?.turns.map((t) => `[${t.time}] ${t.speaker}: ${t.text}`).join('\n') || '');
     setChecked(false);
+    setRoles({});
+    setEdited(false);
   }, [draft?.id, selected]);
 
   async function upload(chosen: File) {
@@ -90,8 +102,8 @@ export function AudioEvidence({
         <div className="notice">
           <FileAudio size={20} />
           <span>
-            Upload a synthetic call, transcribe it with Gemini, then inspect the draft before using
-            it for a review. Uploading alone leaves your current transcript unchanged.
+            Upload a synthetic call, choose a speech model, then inspect the draft before using it
+            for a review. Uploading alone leaves your current transcript unchanged.
           </span>
         </div>
         <section className="audio-upload">
@@ -132,26 +144,40 @@ export function AudioEvidence({
               disabled={Boolean(busy)}
               onClick={() =>
                 work('Loading synthetic sample', async () => {
-                  const response = await fetch('/samples/synthetic-collections-call.wav');
+                  const response = await fetch(`/samples/${sample}`);
                   if (!response.ok) throw new Error('The sample recording is unavailable.');
                   await upload(
-                    new File([await response.blob()], 'synthetic-collections-call.wav', {
+                    new File([await response.blob()], sample, {
                       type: 'audio/wav',
                     }),
                   );
+                  setLanguageCode(sample.startsWith('sarvam-') ? 'hi-IN' : 'en-IN');
                 })
               }
             >
               Load synthetic sample
             </button>
-            <a className="text-button" href="/samples/synthetic-collections-call.wav" download>
+            <a className="text-button" href={`/samples/${sample}`} download>
               <Download size={14} />
               Download sample
             </a>
           </div>
+          <label>
+            Sample recording
+            <select
+              value={sample}
+              disabled={Boolean(busy)}
+              onChange={(e) => setSample(e.target.value)}
+            >
+              <option value="sarvam-hinglish-call.wav">Hindi-English · Sarvam Bulbul voices</option>
+              <option value="synthetic-collections-call.wav">
+                English · original Windows voices
+              </option>
+            </select>
+          </label>
           <p className="field-hint">
-            The sample uses computer-generated voices in English. It is a fictional disputed-payment
-            call, not a bank recording.
+            Both samples use computer-generated voices. These are fictional disputed-payment calls,
+            not bank recordings or live calls.
           </p>
         </section>
         {media.recordings.length > 0 && (
@@ -186,32 +212,125 @@ export function AudioEvidence({
               </>
             )}
             <h3>2. Generate a draft transcript</h3>
+            <label>
+              Transcription provider
+              <select
+                value={provider}
+                disabled={Boolean(busy)}
+                onChange={(e) => setProvider(e.target.value as 'gemini' | 'sarvam')}
+              >
+                <option value="sarvam" disabled={!media.providers?.sarvam}>
+                  Sarvam Saaras · Indian-language speech
+                </option>
+                <option value="gemini" disabled={!media.providers?.gemini}>
+                  Gemini · audio transcription
+                </option>
+              </select>
+            </label>
+            {provider === 'sarvam' && (
+              <label>
+                Recording language
+                <select
+                  value={languageCode}
+                  disabled={Boolean(busy)}
+                  onChange={(e) => setLanguageCode(e.target.value)}
+                >
+                  {speechLanguages.map(([code, label]) => (
+                    <option key={code} value={code}>
+                      {label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
             <p>
-              The next button sends this recording to Gemini and uses one model request. It does not
-              run the collections review.
+              The next button sends this recording to {provider === 'sarvam' ? 'Sarvam' : 'Gemini'}{' '}
+              and uses your API credits or quota. It does not run the collections review.
             </p>
+            {provider === 'sarvam' && (
+              <p className="field-hint">
+                Saaras supports 22 Indian languages and English. This prototype has limited language
+                testing. Batch transcription may take up to 3 minutes. You assign collector/customer
+                roles after listening.
+              </p>
+            )}
             <button
               className="button secondary"
               disabled={!recording || Boolean(busy)}
               onClick={() =>
-                work('Transcribing with Gemini', async () => {
-                  const result = await api<Transcription>(
-                    `/cases/${item.id}/recordings/${selected}/transcriptions`,
-                    { method: 'POST', body: {} },
-                  );
-                  setMedia((current) => ({
-                    ...current,
-                    transcriptions: [...current.transcriptions, result],
-                  }));
-                })
+                work(
+                  `Transcribing with ${provider === 'sarvam' ? 'Sarvam' : 'Gemini'}`,
+                  async () => {
+                    const result = await api<Transcription>(
+                      `/cases/${item.id}/recordings/${selected}/transcriptions`,
+                      {
+                        method: 'POST',
+                        body: { provider, ...(provider === 'sarvam' ? { languageCode } : {}) },
+                      },
+                    );
+                    setMedia((current) => ({
+                      ...current,
+                      transcriptions: [...current.transcriptions, result],
+                    }));
+                  },
+                )
               }
             >
               <Play size={15} />
-              {draft ? 'Transcribe again' : 'Transcribe with Gemini'}
+              {draft
+                ? 'Transcribe again'
+                : `Transcribe with ${provider === 'sarvam' ? 'Sarvam' : 'Gemini'}`}
             </button>
             {draft && (
               <>
                 <h3>3. Check the transcript</h3>
+                {draft.turns.some((t) => t.speakerId !== undefined) && (
+                  <div className="notice warning">
+                    <div>
+                      <p>
+                        Listen to each speaker before assigning a role. Unknown is allowed. Assign
+                        roles before editing words; later changes can be made directly in the draft.
+                      </p>
+                      {[
+                        ...new Set(
+                          draft.turns.flatMap((t) =>
+                            t.speakerId === undefined ? [] : [t.speakerId],
+                          ),
+                        ),
+                      ].map((id) => (
+                        <label key={id}>
+                          Speaker {id}:{' '}
+                          {draft.turns.find((t) => t.speakerId === id)?.text.slice(0, 85)}
+                          <select
+                            aria-label={`Role for speaker ${id}`}
+                            value={roles[id] || 'Unknown'}
+                            disabled={Boolean(busy) || edited}
+                            onChange={(e) => {
+                              const next = {
+                                ...roles,
+                                [id]: e.target.value as 'Collector' | 'Customer' | 'Unknown',
+                              };
+                              setRoles(next);
+                              setText(
+                                draft.turns
+                                  .map(
+                                    (t) =>
+                                      `[${t.time}] ${t.speakerId === undefined ? t.speaker : next[t.speakerId] || 'Unknown'}: ${t.text}`,
+                                  )
+                                  .join('\n'),
+                              );
+                              setChecked(false);
+                            }}
+                          >
+                            <option>Unknown</option>
+                            <option>Collector</option>
+                            <option>Customer</option>
+                          </select>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <p className="field-hint">
                   {draft.model} · {(draft.latencyMs / 1000).toFixed(1)}s · AI-generated text and
                   approximate timestamps. This is not a verified transcript.
@@ -237,6 +356,7 @@ export function AudioEvidence({
                     disabled={Boolean(busy)}
                     onChange={(e) => {
                       setText(e.target.value);
+                      setEdited(true);
                       setChecked(false);
                     }}
                   />

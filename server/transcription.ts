@@ -1,12 +1,31 @@
 import { geminiSchema } from './gemini-schema.ts';
 import { transcriptionSchema, timestampSeconds } from '../shared/audio.ts';
 import { AppError } from './errors.ts';
+import { createSarvamTranscriber } from './sarvam.ts';
 
 export type Transcriber = (
   bytes: Buffer,
   mimeType: string,
+  options?: {
+    provider?: 'gemini' | 'sarvam';
+    languageCode?: string;
+    mode?: 'verbatim' | 'codemix';
+  },
 ) => Promise<{ output: unknown; model: string }>;
-export const transcribeAudio: Transcriber = async (bytes, mimeType) => {
+export function transcriptionProviders() {
+  return {
+    defaultProvider: process.env.TRANSCRIPTION_PROVIDER === 'sarvam' ? 'sarvam' : 'gemini',
+    sarvam: Boolean(process.env.SARVAM_API_KEY?.trim()),
+    gemini: Boolean(process.env.GEMINI_API_KEY?.trim()),
+  };
+}
+export const transcribeAudio: Transcriber = (bytes, mimeType, options) => {
+  const provider = options?.provider || transcriptionProviders().defaultProvider;
+  return provider === 'sarvam'
+    ? createSarvamTranscriber()(bytes, mimeType, options)
+    : transcribeGemini(bytes, mimeType);
+};
+const transcribeGemini: Transcriber = async (bytes, mimeType) => {
   const key = process.env.GEMINI_API_KEY?.trim();
   const model = process.env.GEMINI_TRANSCRIPTION_MODEL || 'gemini-3.1-flash-lite';
   if (!key)

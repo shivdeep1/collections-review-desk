@@ -5,6 +5,20 @@ import type { Assessment } from '../shared/domain.ts';
 
 const invalidOutputs: { name: string; change: (a: Assessment) => void }[] = [
   {
+    name: 'payment finding without a validated identifier mismatch',
+    change: (a) => {
+      a.findings.push({
+        title: 'Unapproved address',
+        category: 'payment_destination',
+        severity: 'concern',
+        explanation: 'Unsupported directory assertion.',
+        policyIds: ['P2'],
+        citations: [a.paymentMentions[0].citation],
+      });
+      a.paymentMentions = [];
+    },
+  },
+  {
     name: 'closure despite unresolved material evidence',
     change: (a) => {
       a.recommendedAction = 'dismiss';
@@ -45,6 +59,38 @@ const invalidOutputs: { name: string; change: (a: Assessment) => void }[] = [
     },
   },
 ];
+test('spoken payment-address words cannot produce a confirmed directory mismatch', async () => {
+  const output = structuredClone(concernAssessment);
+  output.paymentMentions[0].destination = 'amit dot collect at personal dash pay';
+  output.paymentMentions[0].citation.quote =
+    '5,000 amit dot collect at personal dash pay par transfer kar dijiye';
+  const h = await harness({
+    model: {
+      ...testModel,
+      review: async () => ({ assessment: output, model: 'spoken-address-test' }),
+    },
+  });
+  try {
+    await h.login('reviewer');
+    const item = (await h.request('/cases/CR-1001')).body;
+    item.source.transcript.find((t: { id: string }) => t.id === 'T5').text =
+      output.paymentMentions[0].citation.quote;
+    assert.equal(
+      (
+        await h.request('/cases/CR-1001/source', 'PUT', {
+          expectedRevision: item.sourceRevision,
+          source: item.source,
+        })
+      ).status,
+      200,
+    );
+    const review = await h.request('/cases/CR-1001/analyses', 'POST', { sourceRevision: 2 });
+    assert.equal(review.status, 201);
+    assert.equal(review.body.analysis.paymentChecks[0].status, 'unverifiable');
+  } finally {
+    await h.close();
+  }
+});
 for (const { name, change } of invalidOutputs)
   test(`rejects model output with ${name}, leaving no saved report`, async () => {
     const output = structuredClone(concernAssessment);

@@ -65,15 +65,33 @@ export function validateAssessment(raw: unknown, source: Source) {
       source.directory.available &&
       source.directory.destinations.some((d) => normalize(d) === normalize(mention.destination));
     const verifiable = source.directory.available && source.directory.complete;
+    const needsSpelling = /\s|[^\x20-\x7e]/.test(mention.destination);
     return {
       ...mention,
-      status: listed ? 'listed' : verifiable ? 'not_listed' : 'unverifiable',
+      status: listed ? 'listed' : verifiable && !needsSpelling ? 'not_listed' : 'unverifiable',
       explanation: listed
         ? 'Matches a destination in the supplied directory. This does not verify who owns the account.'
-        : verifiable
-          ? 'Absent from the supplied complete directory. Supervisor review is required; this is not proof of fraud.'
-          : 'The directory is unavailable or incomplete. This destination cannot be verified from the supplied evidence.',
+        : needsSpelling
+          ? 'The transcript contains spoken words or non-canonical spelling. Verify the exact payment identifier before comparing it with the directory.'
+          : verifiable
+            ? 'Absent from the supplied complete directory. Supervisor review is required; this is not proof of fraud.'
+            : 'The directory is unavailable or incomplete. This destination cannot be verified from the supplied evidence.',
     };
   });
+  for (const finding of assessment.findings) {
+    if (
+      finding.category === 'payment_destination' &&
+      finding.severity === 'concern' &&
+      !paymentChecks.some(
+        (check) =>
+          check.status === 'not_listed' &&
+          finding.citations.some((c) => c.source === 'transcript' && c.ref === check.citation.ref),
+      )
+    ) {
+      reject(
+        'A claimed payment-directory concern had no verified identifier mismatch. Exact spelling must be established before a supported directory finding.',
+      );
+    }
+  }
   return { assessment, paymentChecks, validatedCitations };
 }

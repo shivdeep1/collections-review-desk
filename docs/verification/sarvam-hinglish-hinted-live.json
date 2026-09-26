@@ -1,0 +1,63 @@
+{
+  "at": "2026-09-26T10:37:56.777Z",
+  "sample": "Bulbul v3 Hinglish synthetic sample",
+  "languageCode": "hi-IN",
+  "mode": "codemix",
+  "latencyMs": 3943,
+  "model": "sarvam/saaras:v4",
+  "turns": [
+    {
+      "time": "00:00",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "नमस्ते रवि जी, मैं demo bank collection से अमित बोल रहा हूँ। हमारे record में ₹18,500 overdue हैं।"
+    },
+    {
+      "time": "00:06",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "ये amount सही नहीं लग रहा। मेरे हिसाब से ₹15000 बाकी हैं। पहले मुझे charges का breakdown भेजिए।"
+    },
+    {
+      "time": "00:13",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "क्या आप शुक्रवार दो अक्टूबर तक अठारह हज़ार पाँच सौ रुपये pay कर देंगे"
+    },
+    {
+      "time": "00:17",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "नहीं जब तक charges clear नहीं होते मैं payment का promise नहीं कर सकता।"
+    },
+    {
+      "time": "00:22",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "अभी पाँच हज़ार रुपये Amit.collect@personal-dashpay पर transfer कर दीजिए। मैं record update कर दूँगा।"
+    },
+    {
+      "time": "00:29",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "क्या ये bank का official payment address है? मुझे official payment link भेजिए।"
+    },
+    {
+      "time": "00:34",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "अभी जो address मैंने बताया उसी पर भेज दीजिए।"
+    },
+    {
+      "time": "00:36",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "मैं अभी कोई payment नहीं कर रहा हूं। पहले statement और official payment details भेजिए।"
+    }
+  ],
+  "warnings": [
+    "Detected language: hi-IN. Sarvam speaker IDs do not establish collector/customer roles. Assign roles after listening.",
+    "Output mode: codemix. Language hint: hi-IN. Recognition can change scripts, normalise or mishear words. Verify negation, amounts and payment addresses against playback. Segment timestamps are approximate.",
+    "Payment addresses may have been normalised from spoken words. Check their exact spelling against the recording before relying on a directory comparison."
+  ]
+}

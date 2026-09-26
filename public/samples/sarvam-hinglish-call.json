@@ -1,0 +1,64 @@
+{
+  "synthetic": true,
+  "model": "bulbul:v3",
+  "at": "2026-09-26T10:35:58.594Z",
+  "durationSeconds": 42.30924999999999,
+  "turns": [
+    {
+      "speaker": "shubh",
+      "role": "Collector",
+      "text": "नमस्ते रवि जी, मैं डेमो बैंक कलेक्शंस से अमित बोल रहा हूँ। हमारे रिकॉर्ड में अठारह हज़ार पाँच सौ रुपये overdue हैं।",
+      "startSeconds": 0,
+      "durationSeconds": 5.9733125
+    },
+    {
+      "speaker": "rohan",
+      "role": "Customer",
+      "text": "ये amount सही नहीं लग रहा। मेरे हिसाब से पंद्रह हज़ार रुपये बाकी हैं। पहले मुझे charges का breakdown भेजिए।",
+      "startSeconds": 6.323312499999999,
+      "durationSeconds": 6.656
+    },
+    {
+      "speaker": "shubh",
+      "role": "Collector",
+      "text": "क्या आप शुक्रवार, दो अक्टूबर तक अठारह हज़ार पाँच सौ रुपये pay कर देंगे?",
+      "startSeconds": 13.329312499999999,
+      "durationSeconds": 4.096
+    },
+    {
+      "speaker": "rohan",
+      "role": "Customer",
+      "text": "नहीं। जब तक charges clear नहीं होते, मैं payment का promise नहीं कर सकता।",
+      "startSeconds": 17.7753125,
+      "durationSeconds": 4.608
+    },
+    {
+      "speaker": "shubh",
+      "role": "Collector",
+      "text": "अभी पाँच हज़ार रुपये अमित डॉट कलेक्ट ऐट पर्सनल डैश पे पर transfer कर दीजिए। मैं record update कर दूँगा।",
+      "startSeconds": 22.733312499999997,
+      "durationSeconds": 5.9733125
+    },
+    {
+      "speaker": "rohan",
+      "role": "Customer",
+      "text": "क्या ये बैंक का official payment address है? मुझे official payment link भेजिए।",
+      "startSeconds": 29.056624999999997,
+      "durationSeconds": 4.9493125
+    },
+    {
+      "speaker": "shubh",
+      "role": "Collector",
+      "text": "अभी जो address मैंने बताया, उसी पर भेज दीजिए।",
+      "startSeconds": 34.355937499999996,
+      "durationSeconds": 2.1333125
+    },
+    {
+      "speaker": "rohan",
+      "role": "Customer",
+      "text": "मैं अभी कोई payment नहीं कर रहा हूँ। पहले statement और official payment details भेजिए।",
+      "startSeconds": 36.83924999999999,
+      "durationSeconds": 5.12
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "at": "2026-09-26T10:37:10.625Z",
+  "sample": "Bulbul v3 Hinglish synthetic sample",
+  "latencyMs": 5103,
+  "model": "sarvam/saaras:v4",
+  "turns": [
+    {
+      "time": "00:00",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "नमस्ते रवि जी मैं डेमो बैंक कलेक्शन से अमित बोल रहा हूँ हमारे रिकॉर्ड में अठारह हज़ार पाँच सौ रुपये ओवरड्यू हैं"
+    },
+    {
+      "time": "00:06",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "یہ اماؤنٹ صحیح نہیں لگ رہا میرے حساب سے پندرہ ہزار روپے باقی ہیں پہلے مجھے چارجز کا بریک ڈاؤن بھیجیے"
+    },
+    {
+      "time": "00:13",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "क्या आप शुक्रवार दो अक्टूबर तक अठारह हज़ार पाँच सौ रुपये पे कर देंगे"
+    },
+    {
+      "time": "00:17",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "नहीं जब तक चार्जेस क्लियर नहीं होते मैं पेमेंट का प्रॉमिस नहीं कर सकता"
+    },
+    {
+      "time": "00:22",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "Abhi paanch hazaar rupaye Amit dot collect at personal dash pay par transfer kar dijiye main record update kar dunga"
+    },
+    {
+      "time": "00:29",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "کیا یہ بینک کا آفیشیل پیمنٹ ایڈریس ہے مجھے آفیشیل پیمنٹ لنک بھیجیے"
+    },
+    {
+      "time": "00:34",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "अभी जो एड्रेस मैंने बताया उसी पर भेज दीजिए"
+    },
+    {
+      "time": "00:36",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "I am not making any payment right now. Please send the statement and official payment details."
+    }
+  ],
+  "warnings": [
+    "Detected language: hi-IN. Sarvam speaker IDs do not establish collector/customer roles. Assign roles after listening.",
+    "Verbatim transcription can still mishear words, negation, amounts and payment addresses. Verify against playback. Segment timestamps are approximate."
+  ]
+}

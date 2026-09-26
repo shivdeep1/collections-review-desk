@@ -1,0 +1,62 @@
+{
+  "at": "2026-09-26T10:38:19.312Z",
+  "sample": "Bulbul v3 Hinglish synthetic sample",
+  "languageCode": "hi-IN",
+  "mode": "verbatim",
+  "latencyMs": 4084,
+  "model": "sarvam/saaras:v4",
+  "turns": [
+    {
+      "time": "00:00",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "नमस्ते रवि जी मैं डेमो बैंक कलेक्शन से अमित बोल रहा हूँ हमारे रिकॉर्ड में अठारह हज़ार पाँच सौ रुपये ओवरड्यू हैं"
+    },
+    {
+      "time": "00:06",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "ये अमाउंट सही नहीं लग रहा मेरे हिसाब से पंद्रह हज़ार रुपये बाकी हैं पहले मुझे चार्जेस का ब्रेकडाउन भेजिए"
+    },
+    {
+      "time": "00:13",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "क्या आप शुक्रवार दो अक्टूबर तक अठारह हज़ार पाँच सौ रुपये पे कर देंगे"
+    },
+    {
+      "time": "00:17",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "नहीं जब तक चार्जेस क्लियर नहीं होते मैं पेमेंट का प्रॉमिस नहीं कर सकता"
+    },
+    {
+      "time": "00:22",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "अभी पाँच हज़ार रुपये अमित डॉट कलेक्ट एट पर्सनल डैश पे पर ट्रांसफर कर दीजिए मैं रिकॉर्ड अपडेट कर दूँगा"
+    },
+    {
+      "time": "00:29",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "क्या ये बैंक का ऑफिशियल पेमेंट एड्रेस है मुझे ऑफिशियल पेमेंट लिंक भेजिए"
+    },
+    {
+      "time": "00:34",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "अभी जो एड्रेस मैंने बताया उसी पर भेज दीजिए"
+    },
+    {
+      "time": "00:36",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "मैं अभी कोई पेमेंट नहीं कर रहा हूं पहले स्टेटमेंट और ऑफिशियल पेमेंट डिटेल्स भेजिए"
+    }
+  ],
+  "warnings": [
+    "Detected language: hi-IN. Sarvam speaker IDs do not establish collector/customer roles. Assign roles after listening.",
+    "Output mode: verbatim. Language hint: hi-IN. Recognition can change scripts, normalise or mishear words. Verify negation, amounts and payment addresses against playback. Segment timestamps are approximate."
+  ]
+}

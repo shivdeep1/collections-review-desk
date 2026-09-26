@@ -1,0 +1,60 @@
+{
+  "at": "2026-09-26T10:34:41.437Z",
+  "sample": "Windows English synthetic sample",
+  "latencyMs": 4469,
+  "model": "sarvam/saaras:v4",
+  "turns": [
+    {
+      "time": "00:00",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "Hello Ravi this is Amit from Demo Bank Collections Our record shows eighteen thousand five hundred rupees overdue"
+    },
+    {
+      "time": "00:09",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "The amount seems wrong I believe fifteen thousand is due Please send me a breakdown"
+    },
+    {
+      "time": "00:17",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "Will you pay eighteen thousand five hundred rupees by Friday second October"
+    },
+    {
+      "time": "00:23",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "No Until the charges are clear I cannot promise to pay"
+    },
+    {
+      "time": "00:29",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "Please transfer five thousand rupees to Amit dot collect at personal dash pay"
+    },
+    {
+      "time": "00:35",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "Is that the bank official address Please send an official payment link"
+    },
+    {
+      "time": "00:41",
+      "speaker": "Unknown",
+      "speakerId": "2",
+      "text": "Use the address I gave you I will update the record"
+    },
+    {
+      "time": "00:46",
+      "speaker": "Unknown",
+      "speakerId": "1",
+      "text": "I am not transferring anything now Send the statement and official payment details"
+    }
+  ],
+  "warnings": [
+    "Detected language: en-IN. Sarvam speaker IDs do not establish collector/customer roles. Assign roles after listening.",
+    "Verbatim transcription can still mishear words, negation, amounts and payment addresses. Verify against playback. Segment timestamps are approximate."
+  ]
+}
