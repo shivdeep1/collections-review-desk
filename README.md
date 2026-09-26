@@ -2,7 +2,7 @@
 
 A working synthetic prototype for bank collections quality teams. It compares a call transcript with the collector's note and a supplied policy, then completes a supervisor-approved case action.
 
-**Hackathon submission:** [one-page PDF](public/collections-review-one-pager.pdf), [editable PowerPoint](public/collections-review-submission.pptx), [demo route](docs/DEMO.md). The local demo already contains a saved Sarvam audio review and supervisor-approved synthetic follow-up.
+**Hackathon submission:** [one-page description](public/collections-review-one-pager.pdf), [plain-language slide PDF](public/collections-review-plain-language-slide.pdf), [editable plain-language slide](public/collections-review-plain-language-slide.pptx), [demo route](docs/DEMO.md). The local demo already contains a saved Sarvam audio review and supervisor-approved synthetic follow-up.
 
 ## Run locally
 
