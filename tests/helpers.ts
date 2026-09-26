@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import type { Assessment } from '../shared/domain.ts';
 import { createApp } from '../server/app.ts';
 import type { ModelAdapter } from '../server/model.ts';
+import type { Transcriber } from '../server/transcription.ts';
 
 export const concernAssessment: Assessment = {
   summary:
@@ -49,10 +50,13 @@ export const testModel: ModelAdapter = {
   }),
 };
 
-export async function harness(options: { model?: ModelAdapter; databasePath?: string } = {}) {
+export async function harness(
+  options: { model?: ModelAdapter; databasePath?: string; transcribe?: Transcriber } = {},
+) {
   const { app, close } = createApp({
     databasePath: options.databasePath ?? ':memory:',
     model: options.model ?? testModel,
+    transcribe: options.transcribe,
   });
   const server = app.listen(0, '127.0.0.1');
   await new Promise<void>((resolve) => server.once('listening', resolve));
@@ -75,7 +79,13 @@ export async function harness(options: { model?: ModelAdapter; databasePath?: st
       },
       ...(body ? { body: JSON.stringify(body) } : {}),
     });
-    return { status: response.status, body: await response.json(), headers: response.headers };
+    return {
+      status: response.status,
+      body: response.headers.get('content-type')?.includes('application/json')
+        ? await response.json()
+        : Buffer.from(await response.arrayBuffer()),
+      headers: response.headers,
+    };
   }
   async function login(role: 'reviewer' | 'supervisor') {
     const result = await request('/session', 'POST', { role });

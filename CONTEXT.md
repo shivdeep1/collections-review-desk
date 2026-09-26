@@ -20,3 +20,7 @@ _Avoid_: Verdict, compliance certificate.
 **Escalation**: A saved local follow-up record resulting from a supervisor decision. It is not an instruction sent to a real bank.
 
 **Audit event**: A chronological record of an actor's completed operation and the versions it affected.
+
+**Recording**: A case-scoped synthetic WAV or MP3 file stored locally with its SHA-256. Uploading a recording does not change the case transcript.
+
+**Transcription draft**: Model-generated text, approximate timestamps, speaker labels and warnings from one recording. The original draft remains saved. A reviewer can edit and adopt it as a new source revision linked to the recording and draft IDs. Acceptance does not certify transcription accuracy.

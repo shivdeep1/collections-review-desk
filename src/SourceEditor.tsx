@@ -25,7 +25,11 @@ export function SourceEditor({
   onClose: () => void;
   onSave: (source: Source, details?: NewCaseDetails) => Promise<void>;
 }) {
-  const [source, setSource] = useState<Source>(() => structuredClone(item?.source || template));
+  const [source, setSource] = useState<Source>(() => {
+    const initial = structuredClone(item?.source || template);
+    if (!item) delete initial.audio;
+    return initial;
+  });
   const [transcript, setTranscript] = useState(item ? formatTranscript(item.source) : '');
   const [note, setNote] = useState(item?.source.collectorNote || '');
   const [customer, setCustomer] = useState('');

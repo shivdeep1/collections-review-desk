@@ -19,6 +19,8 @@ import { AppError } from './errors.ts';
 import { createGeminiModel, PROMPT_VERSION } from './model.ts';
 import type { ModelAdapter } from './model.ts';
 import { validateAssessment } from './evidence.ts';
+import { audioRouter, validateAudioLink } from './audio.ts';
+import type { Transcriber } from './transcription.ts';
 
 const personas: Record<string, Actor> = {
   reviewer: { id: 'demo-reviewer', name: 'Ananya Rao', role: 'reviewer' },
@@ -41,7 +43,11 @@ function supersedePendingProposals(item: CaseRecord) {
     if (proposal.status === 'pending') proposal.status = 'superseded';
   });
 }
-export function createApp(options: { databasePath: string; model?: ModelAdapter }) {
+export function createApp(options: {
+  databasePath: string;
+  model?: ModelAdapter;
+  transcribe?: Transcriber;
+}) {
   const store = new Store(options.databasePath);
   const app = express();
   const model = options.model ?? createGeminiModel();
@@ -99,6 +105,7 @@ export function createApp(options: { databasePath: string; model?: ModelAdapter 
     }
     next();
   });
+  app.use('/api/cases/:id/recordings', express.json({ limit: '9mb' }));
   app.use(express.json({ limit: '200kb' }));
   function actor(req: Request): Actor {
     const token = req.headers.cookie
@@ -126,6 +133,7 @@ export function createApp(options: { databasePath: string; model?: ModelAdapter 
     });
     res.json({ actor: personas[role], demo: true });
   });
+  app.use('/api', audioRouter(store, actor, event, options.transcribe));
   app.get('/api/session', (req, res) => res.json({ actor: actor(req), demo: true }));
   app.get('/api/health', (_req, res) =>
     res.json({ ok: true, ...model.info(), syntheticOnly: true, bankIntegration: 'simulated' }),
@@ -174,6 +182,12 @@ export function createApp(options: { databasePath: string; model?: ModelAdapter 
       })
       .strict()
       .parse(req.body);
+    if (body.source.audio)
+      throw new AppError(
+        400,
+        'INVALID_AUDIO_LINK',
+        'Create the case first, then attach its own recording.',
+      );
     const now = new Date().toISOString();
     const item: CaseRecord = {
       ...body,
@@ -214,6 +228,7 @@ export function createApp(options: { databasePath: string; model?: ModelAdapter 
           'STALE_SOURCE',
           'Another edit changed this case. Reload before saving.',
         );
+      validateAudioLink(store, item.id, source);
       if (JSON.stringify(item.source) === JSON.stringify(source)) return item;
       item.source = source;
       item.sourceRevision++;
@@ -244,6 +259,8 @@ export function createApp(options: { databasePath: string; model?: ModelAdapter 
       exportedAt: new Date().toISOString(),
       purpose: 'Synthetic demonstration only. Bank systems are simulated.',
       case: item,
+      recordings: store.recordings(item.id),
+      transcriptions: store.transcriptions(item.id),
     });
   });
   app.post('/api/cases/:id/analyses', async (req, res) => {
@@ -467,13 +484,18 @@ export function createApp(options: { databasePath: string; model?: ModelAdapter 
     res.status(repeated ? 200 : 201).json({ decision });
   });
   app.use((error: unknown, _req: Request, res: Response, _next: NextFunction) => {
-    if (error instanceof z.ZodError)
+    if (error && typeof error === 'object' && 'type' in error && error.type === 'entity.too.large')
       return res
-        .status(400)
+        .status(413)
         .json({
-          code: 'INVALID_INPUT',
-          message: error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; '),
+          code: 'UPLOAD_TOO_LARGE',
+          message: 'The upload exceeds the size limit. Use a WAV or MP3 recording up to 6 MB.',
         });
+    if (error instanceof z.ZodError)
+      return res.status(400).json({
+        code: 'INVALID_INPUT',
+        message: error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; '),
+      });
     if (error instanceof AppError)
       return res.status(error.status).json({ code: error.code, message: error.message });
     if (error instanceof SyntaxError)
@@ -481,12 +503,10 @@ export function createApp(options: { databasePath: string; model?: ModelAdapter 
         .status(400)
         .json({ code: 'INVALID_JSON', message: 'The request body is not valid JSON.' });
     console.error('Request failed:', error instanceof Error ? error.name : 'unknown');
-    res
-      .status(500)
-      .json({
-        code: 'INTERNAL_ERROR',
-        message: 'The request could not be completed. No action was confirmed. Please try again.',
-      });
+    res.status(500).json({
+      code: 'INTERNAL_ERROR',
+      message: 'The request could not be completed. No action was confirmed. Please try again.',
+    });
   });
   return { app, close: () => store.close() };
 }

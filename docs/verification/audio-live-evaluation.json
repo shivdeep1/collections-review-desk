@@ -1,0 +1,100 @@
+{
+  "testedAt": "2026-09-26T10:07:29.832Z",
+  "caseId": "CR-D4268EE3",
+  "recording": {
+    "id": "4f0bc145-8e31-49db-921e-47299a741804",
+    "caseId": "CR-D4268EE3",
+    "fileName": "synthetic-collections-call.wav",
+    "mimeType": "audio/wav",
+    "bytes": 1694126,
+    "sha256": "7da89fffaada1856b41bdb8f18be7f20ca8f3a8f910d303650edef46a364c6d7",
+    "createdAt": "2026-09-26T10:05:56.832Z"
+  },
+  "draft": {
+    "turns": [
+      {
+        "time": "00:00",
+        "speaker": "Collector",
+        "text": "Hello Ravi, this is Amit from Demo Bank Collections."
+      },
+      {
+        "time": "00:04",
+        "speaker": "Collector",
+        "text": "Our record shows 18,500 rupees overdue."
+      },
+      {
+        "time": "00:09",
+        "speaker": "Customer",
+        "text": "The amount seems wrong."
+      },
+      {
+        "time": "00:11",
+        "speaker": "Customer",
+        "text": "I believe 15,000 is due."
+      },
+      {
+        "time": "00:14",
+        "speaker": "Customer",
+        "text": "Please send me a breakdown."
+      },
+      {
+        "time": "00:17",
+        "speaker": "Collector",
+        "text": "Will you pay 18,500 rupees by Friday, 2nd October?"
+      },
+      {
+        "time": "00:23",
+        "speaker": "Customer",
+        "text": "No."
+      },
+      {
+        "time": "00:24",
+        "speaker": "Customer",
+        "text": "Until the charges are clear, I cannot promise to pay."
+      },
+      {
+        "time": "00:29",
+        "speaker": "Collector",
+        "text": "Please transfer 5,000 rupees to amit.collect@personal-pay."
+      },
+      {
+        "time": "00:35",
+        "speaker": "Customer",
+        "text": "Is that the bank official address?"
+      },
+      {
+        "time": "00:37",
+        "speaker": "Customer",
+        "text": "Please send an official payment link."
+      },
+      {
+        "time": "00:41",
+        "speaker": "Collector",
+        "text": "Use the address I gave you."
+      },
+      {
+        "time": "00:43",
+        "speaker": "Collector",
+        "text": "I will update the record."
+      },
+      {
+        "time": "00:46",
+        "speaker": "Customer",
+        "text": "I am not transferring anything now."
+      },
+      {
+        "time": "00:49",
+        "speaker": "Customer",
+        "text": "Send the statement and official payment details."
+      }
+    ],
+    "warnings": [],
+    "id": "c2a80f12-5cd5-426c-be4a-2f5be5b7da74",
+    "caseId": "CR-D4268EE3",
+    "recordingId": "4f0bc145-8e31-49db-921e-47299a741804",
+    "model": "gemini-3.1-flash-lite",
+    "createdAt": "2026-09-26T10:07:29.823Z",
+    "latencyMs": 4462
+  },
+  "scope": "One synthetic English recording. Comparison is against the authored speech script, not a production ASR accuracy evaluation."
+}

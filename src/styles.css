@@ -2317,6 +2317,72 @@ main {
     font-size: 10px;
   }
 }
+.audio-importer {
+  display: grid;
+  gap: 22px;
+}
+.audio-upload,
+.audio-draft {
+  display: grid;
+  gap: 14px;
+}
+.audio-importer h3 {
+  margin-top: 12px;
+  font-size: 15px;
+}
+.audio-importer p {
+  font-size: 13px;
+  line-height: 1.6;
+}
+.audio-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.audio-importer audio,
+.recording-player audio {
+  width: 100%;
+}
+.audio-importer .notice ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.audio-importer .check-label {
+  align-items: flex-start;
+  line-height: 1.6;
+}
+.audio-importer input[type='checkbox'] {
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.recording-player {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--line);
+  background: #f5f8f4;
+}
+.recording-player strong {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.recording-player p {
+  margin-top: 8px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #5b6a60;
+}
+.time-link {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  color: var(--primary);
+  text-decoration: underline;
+  font-size: 11px;
+}
+.workspace-actions {
+  flex-wrap: wrap;
+}
 @media (prefers-reduced-motion: reduce) {
   *,
   *:before,

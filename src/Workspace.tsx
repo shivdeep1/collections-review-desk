@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -36,6 +36,8 @@ import { actionLabels } from '../shared/domain';
 import { api } from './api';
 import { Breadcrumb, Modal, Spinner, Status, dateTime, money } from './components';
 import { SourceEditor } from './SourceEditor';
+import { AudioEvidence, recordingUrl } from './AudioEvidence';
+import { timestampSeconds } from '../shared/audio';
 
 export function Workspace({
   item,
@@ -58,6 +60,8 @@ export function Workspace({
   const [elapsed, setElapsed] = useState(0);
   const [editing, setEditing] = useState(false);
   const [auditOpen, setAuditOpen] = useState(false);
+  const [audioOpen, setAudioOpen] = useState(false);
+  const player = useRef<HTMLAudioElement>(null);
   const [selectedAnalysis, setSelectedAnalysis] = useState<string | null>(null);
   const [tab, setTab] = useState<'transcript' | 'policy'>('transcript');
   const [highlight, setHighlight] = useState<Citation | null>(null);
@@ -106,6 +110,13 @@ export function Workspace({
           ?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
       30,
     );
+  }
+  function seek(time: string) {
+    if (!player.current) return;
+    player.current.currentTime = timestampSeconds(time);
+    player.current
+      .play()
+      .catch(() => setError('Playback could not start. Use the recording controls to retry.'));
   }
   async function runReview() {
     setBusy('analysis');
@@ -181,6 +192,13 @@ export function Workspace({
           </h1>
         </div>
         <div className="workspace-actions">
+          <button
+            className="button secondary"
+            disabled={Boolean(busy)}
+            onClick={() => setAudioOpen(true)}
+          >
+            <Play size={15} /> Audio evidence
+          </button>
           <button className="button secondary" onClick={() => setAuditOpen(true)}>
             <History size={16} />
             Audit trail<span className="button-count">{item.audit.length}</span>
@@ -288,8 +306,25 @@ export function Workspace({
           <div className="evidence-meta">
             <span>Revision {analysis?.sourceRevision || item.sourceRevision}</span>
             <span>{item.language}</span>
-            <span>Supplied transcript</span>
+            <span>{source.audio ? 'Audio-derived transcript' : 'Supplied transcript'}</span>
           </div>
+          {source.audio && (
+            <div className="recording-player">
+              <strong>Recording linked to this transcript</strong>
+              <audio
+                ref={player}
+                key={source.audio.recordingId}
+                controls
+                preload="metadata"
+                src={recordingUrl(item.id, source.audio.recordingId)}
+                aria-label="Case recording playback"
+              />
+              <p>
+                AI draft accepted by a reviewer. Timestamps are approximate. Click a turn's time to
+                listen and verify.
+              </p>
+            </div>
+          )}
           <div
             className={`collector-note ${highlight?.source === 'note' ? 'source-highlight' : ''}`}
             id="collector-note"
@@ -331,7 +366,9 @@ export function Workspace({
             <div className="transcript">
               <div className="transcript-caption">
                 <span className="small-dot" />
-                Analysis uses this supplied text. Audio is not transcribed.
+                {source.audio
+                  ? 'Analysis uses the accepted transcript. Quotes are checked against text, not verified against the recording.'
+                  : 'Analysis uses this supplied text. No recording is linked to this revision.'}
               </div>
               {source.transcript.map((turn) => (
                 <div
@@ -340,12 +377,27 @@ export function Workspace({
                   className={`transcript-turn ${turn.speaker.toLowerCase()} ${highlight?.source === 'transcript' && highlight.ref === turn.id ? 'source-highlight' : ''}`}
                 >
                   <div className="turn-avatar">
-                    {turn.speaker === 'Collector' ? 'A' : item.customer[0]}
+                    {turn.speaker === 'Collector'
+                      ? 'A'
+                      : turn.speaker === 'Customer'
+                        ? item.customer[0]
+                        : '?'}
                   </div>
                   <div className="turn-body">
                     <div className="turn-heading">
                       <strong>{turn.speaker}</strong>
-                      <span>{turn.time}</span>
+                      {source.audio ? (
+                        <button
+                          className="time-link"
+                          onClick={() => seek(turn.time)}
+                          aria-label={`Play recording at ${turn.time}`}
+                        >
+                          <Play size={11} />
+                          {turn.time}
+                        </button>
+                      ) : (
+                        <span>{turn.time}</span>
+                      )}
                       <span className="turn-ref">{turn.id}</span>
                     </div>
                     <p>
@@ -801,6 +853,23 @@ export function Workspace({
             await onRefresh();
             setSelectedAnalysis(null);
             setSuccess('Evidence saved. Run a new review to assess the updated inputs.');
+          }}
+        />
+      )}
+      {audioOpen && (
+        <AudioEvidence
+          item={item}
+          onClose={() => setAudioOpen(false)}
+          onAdopt={async (nextSource) => {
+            await api(`/cases/${item.id}/source`, {
+              method: 'PUT',
+              body: { expectedRevision: item.sourceRevision, source: nextSource },
+            });
+            await onRefresh();
+            setSelectedAnalysis(null);
+            setSuccess(
+              'Transcript saved as a new revision. Run an AI review to compare it with the collector note.',
+            );
           }}
         />
       )}

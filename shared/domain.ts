@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { audioLinkSchema } from './audio.ts';
 
 const text = (max = 3000) => z.string().trim().min(1).max(max);
 export const actionSchema = z.enum(['escalate', 'request_information', 'dismiss']);
@@ -20,7 +21,7 @@ export const sourceSchema = z
           .object({
             id: text(30),
             time: z.string().regex(/^\d{2}:[0-5]\d(?::[0-5]\d)?$/),
-            speaker: z.enum(['Collector', 'Customer']),
+            speaker: z.enum(['Collector', 'Customer', 'Unknown']),
             text: text(4000),
           })
           .strict(),
@@ -28,6 +29,7 @@ export const sourceSchema = z
       .min(1)
       .max(120),
     collectorNote: text(8000),
+    audio: audioLinkSchema.optional(),
     policy: z
       .object({
         version: text(80),
@@ -214,7 +216,9 @@ export function parseTranscript(input: string): Source['transcript'] {
     .split(/\r?\n/)
     .filter((line) => line.trim())
     .map((line, index) => {
-      const match = line.match(/^\[(\d{2}:\d{2}(?::\d{2})?)\]\s*(Collector|Customer):\s*(.+)$/i);
+      const match = line.match(
+        /^\[(\d{2}:\d{2}(?::\d{2})?)\]\s*(Collector|Customer|Unknown):\s*(.+)$/i,
+      );
       if (!match)
         throw new Error(
           `Line ${index + 1}: use [00:00] Collector: words or [00:00] Customer: words.`,
@@ -222,7 +226,12 @@ export function parseTranscript(input: string): Source['transcript'] {
       return {
         id: `T${index + 1}`,
         time: match[1],
-        speaker: match[2].toLowerCase() === 'collector' ? 'Collector' : 'Customer',
+        speaker:
+          match[2].toLowerCase() === 'collector'
+            ? 'Collector'
+            : match[2].toLowerCase() === 'customer'
+              ? 'Customer'
+              : 'Unknown',
         text: match[3].trim(),
       };
     });
