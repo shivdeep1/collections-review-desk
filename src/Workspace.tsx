@@ -61,8 +61,13 @@ export function Workspace({
   const [selectedAnalysis, setSelectedAnalysis] = useState<string | null>(null);
   const [tab, setTab] = useState<'transcript' | 'policy'>('transcript');
   const [highlight, setHighlight] = useState<Citation | null>(null);
-  const analysis = item.analyses.find((a) => a.id === selectedAnalysis) || item.analyses.at(-1);
   const latest = item.analyses.at(-1);
+  const latestIsCurrent = latest?.sourceRevision === item.sourceRevision;
+  const analysis = selectedAnalysis
+    ? item.analyses.find((a) => a.id === selectedAnalysis)
+    : latestIsCurrent
+      ? latest
+      : undefined;
   const current = Boolean(
     analysis && analysis.id === latest?.id && analysis.sourceRevision === item.sourceRevision,
   );
@@ -111,7 +116,7 @@ export function Workspace({
         method: 'POST',
         body: { sourceRevision: item.sourceRevision },
       });
-      setSelectedAnalysis(result.analysis.id);
+      setSelectedAnalysis(null);
       await onRefresh();
       setSuccess(
         `Review v${result.analysis.version} saved. Inspect the source evidence before proposing an action.`,
@@ -253,6 +258,15 @@ export function Workspace({
           </span>
         </div>
       )}
+      {!analysis && latest && !latestIsCurrent && (
+        <div className="notice warning">
+          <History size={18} />
+          <span>
+            Current inputs are revision {item.sourceRevision} and need a new review. Earlier
+            findings and approvals remain in report history; they do not apply to these inputs.
+          </span>
+        </div>
+      )}
       <div className="review-columns">
         <section className="evidence-panel panel">
           <div className="panel-heading">
@@ -389,20 +403,21 @@ export function Workspace({
                 </span>
                 <h2>Review findings</h2>
               </div>
-              {analysis && (
+              {item.analyses.length > 0 && (
                 <label className="version-select">
                   <span className="sr-only">Report version</span>
                   <select
-                    value={analysis.id}
+                    value={analysis?.id || ''}
                     onChange={(e) => {
-                      setSelectedAnalysis(e.target.value);
+                      setSelectedAnalysis(e.target.value || null);
                       setSuccess('');
                     }}
                   >
+                    {!latestIsCurrent && <option value="">Current inputs · not reviewed</option>}
                     {[...item.analyses].reverse().map((a) => (
                       <option key={a.id} value={a.id}>
                         Report v{a.version}
-                        {a.id === latest?.id ? ' · latest' : ''}
+                        {a.id === latest?.id && latestIsCurrent ? ' · latest' : ' · history'}
                       </option>
                     ))}
                   </select>
@@ -592,11 +607,15 @@ export function Workspace({
                   <span className="section-icon">
                     <ShieldCheck size={18} />
                   </span>
-                  <h2>Next step</h2>
+                  <h2>{!current ? `History · report v${analysis.version}` : 'Next step'}</h2>
                 </div>
                 <span className="approval-label">
                   <LockKeyhole size={12} />
-                  Supervisor approval
+                  {!current
+                    ? 'Historical record'
+                    : decision
+                      ? 'Decision saved'
+                      : 'Supervisor approval'}
                 </span>
               </div>
               {decision ? (
