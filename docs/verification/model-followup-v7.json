@@ -1,0 +1,103 @@
+{
+  "at": "2026-09-26T10:50:48.696Z",
+  "promptVersion": "collections-review-v7",
+  "scenario": "supported concern",
+  "reason": "Targeted retry after 60-second timeout in four-case run",
+  "passed": true,
+  "model": "gemini-3.5-flash-lite",
+  "latencyMs": 3654,
+  "assessment": {
+    "summary": "The collector note falsely claims the customer confirmed a promise to pay INR 18,500 and agreed to a part-payment, whereas the transcript shows the customer disputed the amount, refused to promise payment, and questioned an unapproved personal payment handle.",
+    "noteAssessment": {
+      "status": "contradicted",
+      "explanation": "The collector note states the customer confirmed a promise to pay and agreed to an immediate part-payment without raising a dispute, which directly contradicts the transcript where the customer disputes the amount, refuses to promise payment until charges are clarified, and declines to transfer funds.",
+      "citations": [
+        {
+          "source": "note",
+          "ref": "note",
+          "quote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026. Customer agreed to make an immediate INR 5,000 part-payment. No dispute raised."
+        },
+        {
+          "source": "transcript",
+          "ref": "T2",
+          "quote": "Haan, lekin amount galat lag raha hai. Mere hisaab se 15,000 due hai, 18,500 nahi."
+        },
+        {
+          "source": "transcript",
+          "ref": "T4",
+          "quote": "Nahi, pehle charges ka breakup bhejiye. Jab tak amount clear nahi hota, main payment ka promise nahi kar sakta."
+        }
+      ]
+    },
+    "findings": [
+      {
+        "title": "Inaccurate Note on Promise and Dispute",
+        "category": "note_accuracy",
+        "severity": "concern",
+        "explanation": "The collector recorded a promise to pay and a part-payment agreement while omitting the customer's active dispute and explicit refusal to promise payment.",
+        "policyIds": [
+          "P1"
+        ],
+        "citations": [
+          {
+            "source": "note",
+            "ref": "note",
+            "quote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026. Customer agreed to make an immediate INR 5,000 part-payment. No dispute raised."
+          },
+          {
+            "source": "transcript",
+            "ref": "T2",
+            "quote": "Haan, lekin amount galat lag raha hai. Mere hisaab se 15,000 due hai, 18,500 nahi."
+          },
+          {
+            "source": "transcript",
+            "ref": "T4",
+            "quote": "Nahi, pehle charges ka breakup bhejiye. Jab tak amount clear nahi hota, main payment ka promise nahi kar sakta."
+          }
+        ]
+      },
+      {
+        "title": "Unapproved Payment Destination Directed",
+        "category": "payment_destination",
+        "severity": "concern",
+        "explanation": "The collector directed the customer to transfer funds to a personal payment identifier that is absent from the supplied approved directory.",
+        "policyIds": [
+          "P2"
+        ],
+        "citations": [
+          {
+            "source": "transcript",
+            "ref": "T5",
+            "quote": "Aap filhaal 5,000 amit.collect@personal-pay par transfer kar dijiye, baaki baad mein dekh lenge."
+          }
+        ]
+      }
+    ],
+    "paymentMentions": [
+      {
+        "destination": "amit.collect@personal-pay",
+        "citation": {
+          "source": "transcript",
+          "ref": "T5",
+          "quote": "Aap filhaal 5,000 amit.collect@personal-pay par transfer kar dijiye, baaki baad mein dekh lenge."
+        }
+      }
+    ],
+    "missingEvidence": [],
+    "recommendedAction": "escalate",
+    "recommendationReason": "Escalation is required due to multiple policy discrepancies, including a falsified note regarding a customer promise/dispute and the redirection of funds to an unapproved personal payment destination."
+  },
+  "paymentChecks": [
+    {
+      "destination": "amit.collect@personal-pay",
+      "citation": {
+        "source": "transcript",
+        "ref": "T5",
+        "quote": "Aap filhaal 5,000 amit.collect@personal-pay par transfer kar dijiye, baaki baad mein dekh lenge."
+      },
+      "status": "not_listed",
+      "explanation": "Absent from the supplied complete directory. Supervisor review is required; this is not proof of fraud."
+    }
+  ],
+  "validatedCitations": 8
+}

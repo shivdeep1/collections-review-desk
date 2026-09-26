@@ -1,0 +1,235 @@
+{
+  "ranAt": "2026-09-26T10:14:04.479Z",
+  "promptVersion": "collections-review-v4",
+  "scope": "Four synthetic scenarios; one run each. This is a smoke evaluation, not a production accuracy estimate. Only exact citations and supplied policy references are validated mechanically.",
+  "results": [
+    {
+      "scenario": "supported concern",
+      "model": "gemini-3.5-flash-lite",
+      "passed": true,
+      "latencyMs": 3560,
+      "checks": {
+        "note": true,
+        "payment": true,
+        "action": true,
+        "zeroConcernOnClean": true,
+        "supportedConcernLabel": true,
+        "missingEvidenceNamed": true
+      },
+      "assessment": {
+        "summary": "The collector note falsely claims the customer promised to pay INR 18,500, made a part-payment agreement, and raised no dispute, whereas the transcript shows the customer explicitly disputed the amount, refused to pay without a breakup, and rejected the collector's unapproved personal payment handle.",
+        "noteAssessment": {
+          "status": "contradicted",
+          "explanation": "The collector note states that the customer confirmed a promise to pay and made no dispute, which directly contradicts the transcript where the customer disputes the amount and refuses to make a payment promise.",
+          "citations": [
+            {
+              "source": "note",
+              "ref": "note",
+              "quote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026. Customer agreed to make an immediate INR 5,000 part-payment. No dispute raised."
+            },
+            {
+              "source": "transcript",
+              "ref": "T2",
+              "quote": "Haan, lekin amount galat lag raha hai. Mere hisaab se 15,000 due hai, 18,500 nahi."
+            },
+            {
+              "source": "transcript",
+              "ref": "T4",
+              "quote": "Nahi, pehle charges ka breakup bhejiye. Jab tak amount clear nahi hota, main payment ka promise nahi kar sakta."
+            }
+          ]
+        },
+        "findings": [
+          {
+            "title": "Inaccurate Note Fabrication of Promise and Omission of Dispute",
+            "category": "note_accuracy",
+            "severity": "concern",
+            "explanation": "The collector recorded a false promise to pay and a part-payment agreement while omitting the customer's explicit dispute and refusal to pay.",
+            "policyIds": [
+              "P1"
+            ],
+            "citations": [
+              {
+                "source": "note",
+                "ref": "note",
+                "quote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026. Customer agreed to make an immediate INR 5,000 part-payment. No dispute raised."
+              },
+              {
+                "source": "transcript",
+                "ref": "T4",
+                "quote": "Nahi, pehle charges ka breakup bhejiye. Jab tak amount clear nahi hota, main payment ka promise nahi kar sakta."
+              }
+            ]
+          },
+          {
+            "title": "Direction to Unapproved Payment Destination",
+            "category": "payment_destination",
+            "severity": "concern",
+            "explanation": "The collector directed the customer to transfer funds to a personal address (amit.collect@personal-pay) which is absent from the approved directory.",
+            "policyIds": [
+              "P2"
+            ],
+            "citations": [
+              {
+                "source": "transcript",
+                "ref": "T5",
+                "quote": "Aap filhaal 5,000 amit.collect@personal-pay par transfer kar dijiye, baaki baad mein dekh lenge."
+              }
+            ]
+          }
+        ],
+        "paymentMentions": [
+          {
+            "destination": "amit.collect@personal-pay",
+            "citation": {
+              "source": "transcript",
+              "ref": "T5",
+              "quote": "Aap filhaal 5,000 amit.collect@personal-pay par transfer kar dijiye, baaki baad mein dekh lenge."
+            }
+          }
+        ],
+        "missingEvidence": [],
+        "recommendedAction": "escalate",
+        "recommendationReason": "The case exhibits serious policy violations, including fabricating a customer promise in the notes and directing payments to an unapproved personal address."
+      },
+      "paymentChecks": [
+        {
+          "destination": "amit.collect@personal-pay",
+          "citation": {
+            "source": "transcript",
+            "ref": "T5",
+            "quote": "Aap filhaal 5,000 amit.collect@personal-pay par transfer kar dijiye, baaki baad mein dekh lenge."
+          },
+          "status": "not_listed",
+          "explanation": "Absent from the supplied complete directory. Supervisor review is required; this is not proof of fraud."
+        }
+      ],
+      "validatedCitations": 7
+    },
+    {
+      "scenario": "compliant conversation",
+      "passed": false,
+      "error": "The model took longer than 60 seconds. No report was saved. Try again."
+    },
+    {
+      "scenario": "missing prior evidence",
+      "model": "gemini-3.5-flash-lite",
+      "passed": true,
+      "latencyMs": 2677,
+      "checks": {
+        "note": true,
+        "payment": true,
+        "action": true,
+        "zeroConcernOnClean": true,
+        "supportedConcernLabel": true,
+        "missingEvidenceNamed": true
+      },
+      "assessment": {
+        "summary": "The collector note accurately reflects the customer's uncertainty about arranging funds on Friday without a confirmed commitment. No payment destination was provided by the collector in this call, and prior payment details remain unverified due to missing records.",
+        "noteAssessment": {
+          "status": "supported",
+          "explanation": "The note correctly states that the customer may arrange funds on Friday without a confirmed amount or commitment.",
+          "citations": [
+            {
+              "source": "note",
+              "ref": "note",
+              "quote": "Customer may be able to arrange funds on Friday; no confirmed amount or payment commitment."
+            },
+            {
+              "source": "transcript",
+              "ref": "T2",
+              "quote": "Ho sakta hai Friday ko kuch arrange ho jaye, lekin abhi confirm nahi hai."
+            }
+          ]
+        },
+        "findings": [
+          {
+            "title": "Unverified Prior Payment Details",
+            "category": "missing_evidence",
+            "severity": "needs_review",
+            "explanation": "The previous call recording and message containing payment details are missing, preventing verification of the payment destination mentioned in the note.",
+            "policyIds": [
+              "P2",
+              "P4"
+            ],
+            "citations": [
+              {
+                "source": "note",
+                "ref": "note",
+                "quote": "Payment details were discussed on a previous call; that recording and message are not attached."
+              }
+            ]
+          }
+        ],
+        "paymentMentions": [],
+        "missingEvidence": [
+          "Recording and message of the previous call discussing payment details"
+        ],
+        "recommendedAction": "request_information",
+        "recommendationReason": "Request the missing previous call recording and message to verify the payment details discussed prior to this call."
+      },
+      "paymentChecks": [],
+      "validatedCitations": 3
+    },
+    {
+      "scenario": "held-out changed conversation",
+      "model": "gemini-3.5-flash-lite",
+      "passed": true,
+      "latencyMs": 2573,
+      "checks": {
+        "note": true,
+        "payment": true,
+        "action": true,
+        "zeroConcernOnClean": true,
+        "supportedConcernLabel": true,
+        "missingEvidenceNamed": true
+      },
+      "assessment": {
+        "summary": "The collector note accurately records the customer's commitment of INR 18,500 by Friday, 2 October 2026, the immediate INR 5,000 part-payment agreement, and the absence of disputes. The collector directed the customer to an approved payment destination.",
+        "noteAssessment": {
+          "status": "supported",
+          "explanation": "The collector note correctly captures the payment promise for INR 18,500 by Friday, 2 October 2026, and the immediate INR 5,000 part-payment agreement.",
+          "citations": [
+            {
+              "source": "note",
+              "ref": "note",
+              "quote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026. Customer agreed to make an immediate INR 5,000 part-payment. No dispute raised."
+            },
+            {
+              "source": "transcript",
+              "ref": "T4",
+              "quote": "Haan, main INR 18,500 Friday, 2 October 2026 tak pay kar doonga. Aaj INR 5,000 part-payment karne ko taiyaar hoon."
+            }
+          ]
+        },
+        "findings": [],
+        "paymentMentions": [
+          {
+            "destination": "collections@demo-bank",
+            "citation": {
+              "source": "transcript",
+              "ref": "T5",
+              "quote": "Aap INR 5,000 collections@demo-bank par transfer kar sakte hain."
+            }
+          }
+        ],
+        "missingEvidence": [],
+        "recommendedAction": "dismiss",
+        "recommendationReason": "The call was conducted properly, the note accurately reflects the conversation, and the payment destination is approved."
+      },
+      "paymentChecks": [
+        {
+          "destination": "collections@demo-bank",
+          "citation": {
+            "source": "transcript",
+            "ref": "T5",
+            "quote": "Aap INR 5,000 collections@demo-bank par transfer kar sakte hain."
+          },
+          "status": "listed",
+          "explanation": "Matches a destination in the supplied directory. This does not verify who owns the account."
+        }
+      ],
+      "validatedCitations": 3
+    }
+  ]
+}

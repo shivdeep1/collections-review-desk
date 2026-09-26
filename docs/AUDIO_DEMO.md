@@ -1,26 +1,31 @@
-# Audio demonstration
+# Sarvam audio demonstration
 
-Open the **Ravi Mehta · audio demo** case on this laptop. It is separate from the original Ravi case, so you can rehearse audio without replacing your original text scenario.
+Open **Ravi Mehta · Sarvam Hinglish** on this laptop. The original text and English audio cases remain separate.
 
-1. Choose **Audio evidence**. Use the existing saved recording, or choose **Load synthetic sample**. You can also upload your own synthetic WAV or MP3, up to 6 MB, after confirming its contents are fictional.
-2. Play part of the call. The included 53-second recording uses computer-generated voices and English dialogue. It is not a real bank recording.
-3. Choose **Transcribe with Gemini**, or **Transcribe again** if a saved draft already exists. This sends the actual audio bytes to Gemini. It uses a model request and may be affected by quota or provider availability.
-4. Inspect the draft against playback. The sample's customer disputes the amount and says, "I cannot promise to pay." Check negation, amounts, speaker attribution and payment-address spelling. The model may normalise spoken words into an address string. Timestamps are approximate.
-5. Correct the draft if needed, tick the acceptance checkbox, then choose **Use transcript for review**. This creates a new source revision. The collector note remains unchanged, so the review can now compare that note against the accepted transcript.
-6. Choose **Run AI review**. Click a transcript timestamp to hear that passage. Follow the existing proposal, supervisor approval and saved-action workflow.
+1. Open **Audio evidence**. Use the existing recording or select **Hindi-English · Sarvam Bulbul voices**, then **Load synthetic sample**. The 42-second call uses two stock synthetic voices. It is not a live or real bank call.
+2. Select **Sarvam Saaras** and **Hindi / Hinglish** as the recording language. Choose **Transcribe again** or **Transcribe with Sarvam**. This spends Sarvam credits. Gemini remains available as a separate transcription option.
+3. Inspect the draft against playback. In the tested sample, speaker 2 introduces himself as the collector and speaker 1 is the customer. Select those roles after inspection; do not assume the numbering will always be the same.
+4. Check the refusal, disputed amount and payment address. For this known synthetic script, normalise the spoken address in the draft from **अमित डॉट कलेक्ट एट पर्सनल डैश पे** to **amit.collect@personal-pay** after checking it. This is a human correction, not an automatically verified identifier. Original provider text remains saved. Never guess an address on a real call; request corroborating evidence if spelling is uncertain.
+5. Tick the inspection checkbox and choose **Use transcript for review**. This saves a new source revision; the collector note remains unchanged. The completed practice case already contains the correction, so accepting a new raw draft requires checking it again.
+6. Run the review. Gemini compares the accepted evidence with the note and supplied policy. Click **00:17** to replay the customer's refusal. Inspect exact quotations and the directory result.
+7. Propose investigation with a reason that records your correction. Switch to the supervisor, inspect the evidence and approve a local follow-up. The app retains the original draft, source revisions, model report and human reasons.
 
-If you change or restore inputs after a completed decision, the current view now shows unreviewed inputs. Earlier findings and approvals are still available through the report selector, clearly labelled as history. This does not erase a completed decision or apply it to new evidence.
+## Honest pitch
 
-## What to tell the judges
+"Sarvam transcribes a Hindi-English recording. A reviewer checks the words and speaker roles, then Gemini compares that evidence with the collector note and policy. Code checks quotations and payment identifiers. The supervisor owns the final action."
 
-"We can start from a recording, not just a typed call log. Gemini generates a draft, a reviewer checks the words against playback, and the accepted transcript becomes versioned evidence. The review compares that evidence with the collector note and policy. The supervisor owns the final action."
+Say **Sarvam supports transcription across 22 Indian languages and English; we tested English and Hindi-English synthetic samples**. Do not say every language or accent is validated. Bulbul speech generation supports a smaller 11-language set.
 
-The first live transcription used Gemini 3.1 Flash-Lite, took 4.5 seconds and returned 15 segments. We checked one synthetic English recording. This is not a production accuracy result for noisy calls, Hindi/Hinglish or different accents.
+## What the tests found
 
-## Quota and recovery
+Saaras v4 transcribed the original 53-second English recording in 4.5 seconds. Hindi-hinted verbatim mode handled the new 42-second Hinglish sample in about 4.1 seconds; the UI run took 4.3 seconds. Auto-detection mixed scripts and translated one segment. Code-mixed output normalised the address incorrectly. We therefore use verbatim output and recommend selecting the known language.
 
-Uploading, playing a recording, editing a draft, accepting it and browsing history do not call Gemini. Transcription and collections review are separate calls. Changing cases does not reset quota. A provider error leaves the recording and current case evidence intact. Show a saved draft/report as a previous live run if connectivity fails; do not describe it as a fresh run.
+The review model also struggled with an address left as spoken Hindi words. Exact-identifier validation rejected unsupported output. The tested completed workflow includes the documented spelling correction. Show this human step; do not imply untouched audio becomes a fully verified report.
 
-## Persistence
+## Credits and recovery
 
-Recordings and original transcription drafts are stored in the local SQLite database. Each adopted source links to its recording and draft IDs. Case JSON exports include recording metadata and original drafts; they do not embed the audio bytes. Back up the database as described in the README to preserve the full audio evidence.
+Uploading, playback, editing, accepting and browsing history make no AI request. Transcription uses Sarvam credits or Gemini quota according to your selection. Review is a separate Gemini request. Switching cases does not reset quota. There is no silent fallback. A provider error preserves recordings and active evidence. A Sarvam request exceeding three minutes may still finish and be billed remotely; retry creates a new job.
+
+## Persistence and history
+
+The local SQLite database stores recordings and original drafts. The adopted source links to both IDs. JSON export includes metadata and drafts, not audio bytes. Back up the database to retain audio. Editing evidence makes earlier reports and decisions historical; it does not erase them.

@@ -1,0 +1,993 @@
+{
+  "exportedAt": "2026-09-26T10:52:55.212Z",
+  "purpose": "Synthetic demonstration only. Bank systems are simulated.",
+  "case": {
+    "customer": "Ravi Mehta · Sarvam Hinglish",
+    "business": "Mehta Printworks",
+    "overdueAmount": 18500,
+    "daysPastDue": 18,
+    "language": "Hindi / Hinglish",
+    "source": {
+      "transcript": [
+        {
+          "id": "T1",
+          "time": "00:00",
+          "speaker": "Collector",
+          "text": "नमस्ते रवि जी मैं डेमो बैंक कलेक्शन से अमित बोल रहा हूँ हमारे रिकॉर्ड में अठारह हज़ार पाँच सौ रुपये ओवरड्यू हैं"
+        },
+        {
+          "id": "T2",
+          "time": "00:06",
+          "speaker": "Customer",
+          "text": "ये अमाउंट सही नहीं लग रहा मेरे हिसाब से पंद्रह हज़ार रुपये बाकी हैं पहले मुझे चार्जेस का ब्रेकडाउन भेजिए"
+        },
+        {
+          "id": "T3",
+          "time": "00:13",
+          "speaker": "Collector",
+          "text": "क्या आप शुक्रवार दो अक्टूबर तक अठारह हज़ार पाँच सौ रुपये पे कर देंगे"
+        },
+        {
+          "id": "T4",
+          "time": "00:17",
+          "speaker": "Customer",
+          "text": "नहीं जब तक चार्जेस क्लियर नहीं होते मैं पेमेंट का प्रॉमिस नहीं कर सकता"
+        },
+        {
+          "id": "T5",
+          "time": "00:22",
+          "speaker": "Collector",
+          "text": "अभी पाँच हज़ार रुपये amit.collect@personal-pay पर ट्रांसफर कर दीजिए मैं रिकॉर्ड अपडेट कर दूँगा"
+        },
+        {
+          "id": "T6",
+          "time": "00:29",
+          "speaker": "Customer",
+          "text": "क्या ये बैंक का ऑफिशियल पेमेंट एड्रेस है मुझे ऑफिशियल पेमेंट लिंक भेजिए"
+        },
+        {
+          "id": "T7",
+          "time": "00:34",
+          "speaker": "Collector",
+          "text": "अभी जो एड्रेस मैंने बताया उसी पर भेज दीजिए"
+        },
+        {
+          "id": "T8",
+          "time": "00:36",
+          "speaker": "Customer",
+          "text": "मैं अभी कोई पेमेंट नहीं कर रहा हूं पहले स्टेटमेंट और ऑफिशियल पेमेंट डिटेल्स भेजिए"
+        }
+      ],
+      "collectorNote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026. Customer agreed to make an immediate INR 5,000 part-payment. No dispute raised.",
+      "audio": {
+        "recordingId": "e387bda3-1f6c-48a9-8c35-df254ba6f3b1",
+        "transcriptionId": "cd88624e-17e8-4ddd-9356-60c980c1e405"
+      },
+      "policy": {
+        "version": "DEMO-COL-1.0",
+        "clauses": [
+          {
+            "id": "P1",
+            "title": "Accurate case notes",
+            "text": "A promise to pay must reflect an explicit customer commitment to an amount and a date. Record a disputed amount and a refusal or uncertainty accurately. Do not convert a conditional statement into an unconditional promise."
+          },
+          {
+            "id": "P2",
+            "title": "Approved payment destinations",
+            "text": "Collectors may direct customers only to destinations in the bank-supplied approved directory. A destination absent from a complete supplied directory is a discrepancy for supervisor review, not proof of fraud. If the directory is unavailable or incomplete, request verification."
+          },
+          {
+            "id": "P3",
+            "title": "Respectful treatment",
+            "text": "Collectors must communicate respectfully. Do not threaten public embarrassment, disclosure to unrelated third parties, or consequences unsupported by the supplied case evidence. A routine reminder of an overdue amount is not itself misconduct."
+          },
+          {
+            "id": "P4",
+            "title": "Evidence before conclusions",
+            "text": "Assess only the supplied conversation and records. If a recording excerpt or relevant data is missing, state the limitation. Do not infer payment, agreement, fraud or misconduct from silence or an ambiguous statement."
+          }
+        ]
+      },
+      "directory": {
+        "version": "DEMO-PAY-2026-09",
+        "available": true,
+        "complete": true,
+        "destinations": [
+          "collections@demo-bank",
+          "repay@demo-bank"
+        ]
+      }
+    },
+    "synthetic": true,
+    "id": "CR-A2889970",
+    "loanId": "DEMO-LN-BAC793",
+    "loanType": "Business instalment loan",
+    "owner": "Ananya Rao",
+    "createdAt": "2026-09-26T10:41:53.732Z",
+    "updatedAt": "2026-09-26T10:51:01.712Z",
+    "sourceRevision": 3,
+    "status": "escalated",
+    "analyses": [
+      {
+        "id": "14a0ef4c-d49d-4622-990a-c6a09606d292",
+        "version": 1,
+        "sourceRevision": 2,
+        "sourceHash": "5c305dd89b44d973b65caff65b0adf159bd82baaf62903cd9f313b5e247652dc",
+        "source": {
+          "transcript": [
+            {
+              "id": "T1",
+              "time": "00:00",
+              "speaker": "Collector",
+              "text": "नमस्ते रवि जी मैं डेमो बैंक कलेक्शन से अमित बोल रहा हूँ हमारे रिकॉर्ड में अठारह हज़ार पाँच सौ रुपये ओवरड्यू हैं"
+            },
+            {
+              "id": "T2",
+              "time": "00:06",
+              "speaker": "Customer",
+              "text": "ये अमाउंट सही नहीं लग रहा मेरे हिसाब से पंद्रह हज़ार रुपये बाकी हैं पहले मुझे चार्जेस का ब्रेकडाउन भेजिए"
+            },
+            {
+              "id": "T3",
+              "time": "00:13",
+              "speaker": "Collector",
+              "text": "क्या आप शुक्रवार दो अक्टूबर तक अठारह हज़ार पाँच सौ रुपये पे कर देंगे"
+            },
+            {
+              "id": "T4",
+              "time": "00:17",
+              "speaker": "Customer",
+              "text": "नहीं जब तक चार्जेस क्लियर नहीं होते मैं पेमेंट का प्रॉमिस नहीं कर सकता"
+            },
+            {
+              "id": "T5",
+              "time": "00:22",
+              "speaker": "Collector",
+              "text": "अभी पाँच हज़ार रुपये अमित डॉट कलेक्ट एट पर्सनल डैश पे पर ट्रांसफर कर दीजिए मैं रिकॉर्ड अपडेट कर दूँगा"
+            },
+            {
+              "id": "T6",
+              "time": "00:29",
+              "speaker": "Customer",
+              "text": "क्या ये बैंक का ऑफिशियल पेमेंट एड्रेस है मुझे ऑफिशियल पेमेंट लिंक भेजिए"
+            },
+            {
+              "id": "T7",
+              "time": "00:34",
+              "speaker": "Collector",
+              "text": "अभी जो एड्रेस मैंने बताया उसी पर भेज दीजिए"
+            },
+            {
+              "id": "T8",
+              "time": "00:36",
+              "speaker": "Customer",
+              "text": "मैं अभी कोई पेमेंट नहीं कर रहा हूं पहले स्टेटमेंट और ऑफिशियल पेमेंट डिटेल्स भेजिए"
+            }
+          ],
+          "collectorNote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026. Customer agreed to make an immediate INR 5,000 part-payment. No dispute raised.",
+          "audio": {
+            "recordingId": "e387bda3-1f6c-48a9-8c35-df254ba6f3b1",
+            "transcriptionId": "cd88624e-17e8-4ddd-9356-60c980c1e405"
+          },
+          "policy": {
+            "version": "DEMO-COL-1.0",
+            "clauses": [
+              {
+                "id": "P1",
+                "title": "Accurate case notes",
+                "text": "A promise to pay must reflect an explicit customer commitment to an amount and a date. Record a disputed amount and a refusal or uncertainty accurately. Do not convert a conditional statement into an unconditional promise."
+              },
+              {
+                "id": "P2",
+                "title": "Approved payment destinations",
+                "text": "Collectors may direct customers only to destinations in the bank-supplied approved directory. A destination absent from a complete supplied directory is a discrepancy for supervisor review, not proof of fraud. If the directory is unavailable or incomplete, request verification."
+              },
+              {
+                "id": "P3",
+                "title": "Respectful treatment",
+                "text": "Collectors must communicate respectfully. Do not threaten public embarrassment, disclosure to unrelated third parties, or consequences unsupported by the supplied case evidence. A routine reminder of an overdue amount is not itself misconduct."
+              },
+              {
+                "id": "P4",
+                "title": "Evidence before conclusions",
+                "text": "Assess only the supplied conversation and records. If a recording excerpt or relevant data is missing, state the limitation. Do not infer payment, agreement, fraud or misconduct from silence or an ambiguous statement."
+              }
+            ]
+          },
+          "directory": {
+            "version": "DEMO-PAY-2026-09",
+            "available": true,
+            "complete": true,
+            "destinations": [
+              "collections@demo-bank",
+              "repay@demo-bank"
+            ]
+          }
+        },
+        "loanContext": {
+          "loanType": "Business instalment loan",
+          "overdueAmount": 18500,
+          "daysPastDue": 18,
+          "currency": "INR"
+        },
+        "createdAt": "2026-09-26T10:45:34.175Z",
+        "actor": {
+          "id": "demo-reviewer",
+          "name": "Ananya Rao",
+          "role": "reviewer"
+        },
+        "model": "gemini-3.5-flash-lite",
+        "latencyMs": 3602,
+        "promptVersion": "collections-review-v6",
+        "assessment": {
+          "summary": "The collector note falsely claims the customer confirmed a promise to pay and made no dispute, whereas the transcript shows the customer explicitly disputed the amount, refused to promise payment until charges are cleared, and questioned an unverified payment handle.",
+          "noteAssessment": {
+            "status": "contradicted",
+            "explanation": "The note states the customer confirmed a promise to pay and raised no dispute, but the transcript shows the customer disputed the amount and refused to promise payment.",
+            "citations": [
+              {
+                "source": "note",
+                "ref": "note",
+                "quote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026. Customer agreed to make an immediate INR 5,000 part-payment. No dispute raised."
+              },
+              {
+                "source": "transcript",
+                "ref": "T2",
+                "quote": "ये अमाउंट सही नहीं लग रहा मेरे हिसाब से पंद्रह हज़ार रुपये बाकी हैं पहले मुझे चार्जेस का ब्रेकडाउन भेजिए"
+              },
+              {
+                "source": "transcript",
+                "ref": "T4",
+                "quote": "नहीं जब तक चार्जेस क्लियर नहीं होते मैं पेमेंट का प्रॉमिस नहीं कर सकता"
+              }
+            ]
+          },
+          "findings": [
+            {
+              "title": "False Promise and Dispute Inaccuracy in Note",
+              "category": "note_accuracy",
+              "severity": "concern",
+              "explanation": "The collector recorded an unconditional promise to pay and claimed no dispute was raised, contradicting the customer's explicit dispute and refusal to pay.",
+              "policyIds": [
+                "P1"
+              ],
+              "citations": [
+                {
+                  "source": "note",
+                  "ref": "note",
+                  "quote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026. Customer agreed to make an immediate INR 5,000 part-payment. No dispute raised."
+                },
+                {
+                  "source": "transcript",
+                  "ref": "T2",
+                  "quote": "ये अमाउंट सही नहीं लग रहा मेरे हिसाब से पंद्रह हज़ार रुपये बाकी हैं पहले मुझे चार्जेस का ब्रेकडाउन भेजिए"
+                },
+                {
+                  "source": "transcript",
+                  "ref": "T4",
+                  "quote": "नहीं जब तक चार्जेस क्लियर नहीं होते मैं पेमेंट का प्रॉमिस नहीं कर सकता"
+                }
+              ]
+            },
+            {
+              "title": "Unapproved Payment Destination Directed",
+              "category": "payment_destination",
+              "severity": "concern",
+              "explanation": "The collector directed the customer to transfer funds to 'अमित डॉट कलेक्ट एट पर्सनल डैश पे', which is not present in the approved bank directory.",
+              "policyIds": [
+                "P2"
+              ],
+              "citations": [
+                {
+                  "source": "transcript",
+                  "ref": "T5",
+                  "quote": "अभी पाँच हज़ार रुपये अमित डॉट कलेक्ट एट पर्सनल डैश पे पर ट्रांसफर कर दीजिए मैं रिकॉर्ड अपडेट कर दूँगा"
+                }
+              ]
+            }
+          ],
+          "paymentMentions": [],
+          "missingEvidence": [
+            "Exact spelling of the spoken payment address 'अमित डॉट कलेक्ट एट पर्सनल डैश पे' for directory verification"
+          ],
+          "recommendedAction": "escalate",
+          "recommendationReason": "The note contains significant contradictions regarding a promise to pay and dispute status, and the collector directed the customer to an unapproved payment destination."
+        },
+        "paymentChecks": [],
+        "validatedCitations": 7
+      },
+      {
+        "id": "65d42a8f-cbaa-4f65-9c4b-db46298e34c8",
+        "version": 2,
+        "sourceRevision": 3,
+        "sourceHash": "d752f7c3f2049e2182594d4998d646ce6c129318068dc88c4d60440a5bdf73f8",
+        "source": {
+          "transcript": [
+            {
+              "id": "T1",
+              "time": "00:00",
+              "speaker": "Collector",
+              "text": "नमस्ते रवि जी मैं डेमो बैंक कलेक्शन से अमित बोल रहा हूँ हमारे रिकॉर्ड में अठारह हज़ार पाँच सौ रुपये ओवरड्यू हैं"
+            },
+            {
+              "id": "T2",
+              "time": "00:06",
+              "speaker": "Customer",
+              "text": "ये अमाउंट सही नहीं लग रहा मेरे हिसाब से पंद्रह हज़ार रुपये बाकी हैं पहले मुझे चार्जेस का ब्रेकडाउन भेजिए"
+            },
+            {
+              "id": "T3",
+              "time": "00:13",
+              "speaker": "Collector",
+              "text": "क्या आप शुक्रवार दो अक्टूबर तक अठारह हज़ार पाँच सौ रुपये पे कर देंगे"
+            },
+            {
+              "id": "T4",
+              "time": "00:17",
+              "speaker": "Customer",
+              "text": "नहीं जब तक चार्जेस क्लियर नहीं होते मैं पेमेंट का प्रॉमिस नहीं कर सकता"
+            },
+            {
+              "id": "T5",
+              "time": "00:22",
+              "speaker": "Collector",
+              "text": "अभी पाँच हज़ार रुपये amit.collect@personal-pay पर ट्रांसफर कर दीजिए मैं रिकॉर्ड अपडेट कर दूँगा"
+            },
+            {
+              "id": "T6",
+              "time": "00:29",
+              "speaker": "Customer",
+              "text": "क्या ये बैंक का ऑफिशियल पेमेंट एड्रेस है मुझे ऑफिशियल पेमेंट लिंक भेजिए"
+            },
+            {
+              "id": "T7",
+              "time": "00:34",
+              "speaker": "Collector",
+              "text": "अभी जो एड्रेस मैंने बताया उसी पर भेज दीजिए"
+            },
+            {
+              "id": "T8",
+              "time": "00:36",
+              "speaker": "Customer",
+              "text": "मैं अभी कोई पेमेंट नहीं कर रहा हूं पहले स्टेटमेंट और ऑफिशियल पेमेंट डिटेल्स भेजिए"
+            }
+          ],
+          "collectorNote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026. Customer agreed to make an immediate INR 5,000 part-payment. No dispute raised.",
+          "audio": {
+            "recordingId": "e387bda3-1f6c-48a9-8c35-df254ba6f3b1",
+            "transcriptionId": "cd88624e-17e8-4ddd-9356-60c980c1e405"
+          },
+          "policy": {
+            "version": "DEMO-COL-1.0",
+            "clauses": [
+              {
+                "id": "P1",
+                "title": "Accurate case notes",
+                "text": "A promise to pay must reflect an explicit customer commitment to an amount and a date. Record a disputed amount and a refusal or uncertainty accurately. Do not convert a conditional statement into an unconditional promise."
+              },
+              {
+                "id": "P2",
+                "title": "Approved payment destinations",
+                "text": "Collectors may direct customers only to destinations in the bank-supplied approved directory. A destination absent from a complete supplied directory is a discrepancy for supervisor review, not proof of fraud. If the directory is unavailable or incomplete, request verification."
+              },
+              {
+                "id": "P3",
+                "title": "Respectful treatment",
+                "text": "Collectors must communicate respectfully. Do not threaten public embarrassment, disclosure to unrelated third parties, or consequences unsupported by the supplied case evidence. A routine reminder of an overdue amount is not itself misconduct."
+              },
+              {
+                "id": "P4",
+                "title": "Evidence before conclusions",
+                "text": "Assess only the supplied conversation and records. If a recording excerpt or relevant data is missing, state the limitation. Do not infer payment, agreement, fraud or misconduct from silence or an ambiguous statement."
+              }
+            ]
+          },
+          "directory": {
+            "version": "DEMO-PAY-2026-09",
+            "available": true,
+            "complete": true,
+            "destinations": [
+              "collections@demo-bank",
+              "repay@demo-bank"
+            ]
+          }
+        },
+        "loanContext": {
+          "loanType": "Business instalment loan",
+          "overdueAmount": 18500,
+          "daysPastDue": 18,
+          "currency": "INR"
+        },
+        "createdAt": "2026-09-26T10:49:25.022Z",
+        "actor": {
+          "id": "demo-reviewer",
+          "name": "Ananya Rao",
+          "role": "reviewer"
+        },
+        "model": "gemini-3.5-flash-lite",
+        "latencyMs": 3493,
+        "promptVersion": "collections-review-v7",
+        "assessment": {
+          "summary": "The collector note falsely claims the customer confirmed a promise to pay and made no dispute, while the transcript shows the customer disputed the amount, refused a payment promise until charges were cleared, and questioned the unapproved payment handle provided by the collector.",
+          "noteAssessment": {
+            "status": "contradicted",
+            "explanation": "The note states the customer confirmed a promise to pay INR 18,500 and agreed to an immediate part-payment without raising a dispute. This directly contradicts the transcript where the customer disputes the amount, refuses to promise payment, and asks for a breakdown of charges.",
+            "citations": [
+              {
+                "source": "note",
+                "ref": "note",
+                "quote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026. Customer agreed to make an immediate INR 5,000 part-payment. No dispute raised."
+              },
+              {
+                "source": "transcript",
+                "ref": "T2",
+                "quote": "ये अमाउंट सही नहीं लग रहा मेरे हिसाब से पंद्रह हज़ार रुपये बाकी हैं पहले मुझे चार्जेस का ब्रेकडाउन भेजिए"
+              },
+              {
+                "source": "transcript",
+                "ref": "T4",
+                "quote": "नहीं जब तक चार्जेस क्लियर नहीं होते मैं पेमेंट का प्रॉमिस नहीं कर सकता"
+              }
+            ]
+          },
+          "findings": [
+            {
+              "title": "Inaccurate note regarding payment promise and dispute",
+              "category": "note_accuracy",
+              "severity": "concern",
+              "explanation": "The collector note records a promise to pay and an agreement for part-payment while omitting the customer's dispute and explicit refusal to promise payment.",
+              "policyIds": [
+                "P1"
+              ],
+              "citations": [
+                {
+                  "source": "note",
+                  "ref": "note",
+                  "quote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026. Customer agreed to make an immediate INR 5,000 part-payment. No dispute raised."
+                },
+                {
+                  "source": "transcript",
+                  "ref": "T2",
+                  "quote": "ये अमाउंट सही नहीं लग रहा मेरे हिसाब से पंद्रह हज़ार रुपये बाकी हैं पहले मुझे चार्जेस का ब्रेकडाउन भेजिए"
+                },
+                {
+                  "source": "transcript",
+                  "ref": "T4",
+                  "quote": "नहीं जब तक चार्जेस क्लियर नहीं होते मैं पेमेंट का प्रॉमिस नहीं कर सकता"
+                }
+              ]
+            },
+            {
+              "title": "Unapproved payment destination directed to customer",
+              "category": "payment_destination",
+              "severity": "concern",
+              "explanation": "The collector directed the customer to a personal payment handle that is absent from the bank-supplied approved directory.",
+              "policyIds": [
+                "P2"
+              ],
+              "citations": [
+                {
+                  "source": "transcript",
+                  "ref": "T5",
+                  "quote": "अभी पाँच हज़ार रुपये amit.collect@personal-pay पर ट्रांसफर कर दीजिए मैं रिकॉर्ड अपडेट कर दूँगा"
+                }
+              ]
+            }
+          ],
+          "paymentMentions": [
+            {
+              "destination": "amit.collect@personal-pay",
+              "citation": {
+                "source": "transcript",
+                "ref": "T5",
+                "quote": "अभी पाँच हज़ार रुपये amit.collect@personal-pay पर ट्रांसफर कर दीजिए मैं रिकॉर्ड अपडेट कर दूँगा"
+              }
+            }
+          ],
+          "missingEvidence": [],
+          "recommendedAction": "escalate",
+          "recommendationReason": "Escalation is required due to documented note inaccuracies and the collector directing the customer to an unapproved personal payment destination."
+        },
+        "paymentChecks": [
+          {
+            "destination": "amit.collect@personal-pay",
+            "citation": {
+              "source": "transcript",
+              "ref": "T5",
+              "quote": "अभी पाँच हज़ार रुपये amit.collect@personal-pay पर ट्रांसफर कर दीजिए मैं रिकॉर्ड अपडेट कर दूँगा"
+            },
+            "status": "not_listed",
+            "explanation": "Absent from the supplied complete directory. Supervisor review is required; this is not proof of fraud."
+          }
+        ],
+        "validatedCitations": 8
+      }
+    ],
+    "proposals": [
+      {
+        "analysisId": "65d42a8f-cbaa-4f65-9c4b-db46298e34c8",
+        "sourceRevision": 3,
+        "action": "escalate",
+        "reason": "The Hindi transcript contains an explicit refusal and amount dispute, contradicting the note. I assigned the speaker roles and normalised the spoken demo address to amit.collect@personal-pay after checking the synthetic script. The original Sarvam draft remains saved. Investigate the discrepancy; directory absence does not establish ownership or fraud.",
+        "id": "733c5d8e-d08e-418e-b519-c72874a30ab6",
+        "createdAt": "2026-09-26T10:49:59.914Z",
+        "actor": {
+          "id": "demo-reviewer",
+          "name": "Ananya Rao",
+          "role": "reviewer"
+        },
+        "status": "completed"
+      }
+    ],
+    "decisions": [
+      {
+        "id": "38af4a3d-7e2c-4c97-a3fc-1fcb9fb7d628",
+        "proposalId": "733c5d8e-d08e-418e-b519-c72874a30ab6",
+        "analysisId": "65d42a8f-cbaa-4f65-9c4b-db46298e34c8",
+        "sourceRevision": 3,
+        "action": "escalate",
+        "reason": "Approve the simulated investigation of the note discrepancy. Reviewed the Hindi refusal, explicit speaker assignments and documented manual spelling correction. The original audio and Sarvam draft remain evidence. This does not establish intent, ownership or fraud.",
+        "actor": {
+          "id": "demo-supervisor",
+          "name": "Vikram Sethi",
+          "role": "supervisor"
+        },
+        "createdAt": "2026-09-26T10:51:01.712Z",
+        "followUp": {
+          "id": "FU-8799858A",
+          "simulated": true,
+          "queue": "Collections investigation",
+          "status": "open"
+        }
+      }
+    ],
+    "audit": [
+      {
+        "id": "f9b95d95-3f1b-4884-83d1-0a8f28a9b0c1",
+        "at": "2026-09-26T10:41:53.734Z",
+        "actor": {
+          "id": "demo-reviewer",
+          "name": "Ananya Rao",
+          "role": "reviewer"
+        },
+        "type": "case_created",
+        "detail": "New synthetic case created with supplied transcript and policy.",
+        "sourceRevision": 1
+      },
+      {
+        "id": "9fd67b70-1cd0-4743-bffb-32034ab7695f",
+        "at": "2026-09-26T10:42:07.366Z",
+        "actor": {
+          "id": "demo-reviewer",
+          "name": "Ananya Rao",
+          "role": "reviewer"
+        },
+        "type": "audio_uploaded",
+        "detail": "Synthetic recording e387bda3-1f6c-48a9-8c35-df254ba6f3b1 saved locally. Existing transcript unchanged.",
+        "sourceRevision": 1
+      },
+      {
+        "id": "004e86d7-c23d-46c1-9c00-c0542d743037",
+        "at": "2026-09-26T10:42:39.596Z",
+        "actor": {
+          "id": "demo-reviewer",
+          "name": "Ananya Rao",
+          "role": "reviewer"
+        },
+        "type": "audio_transcribed",
+        "detail": "Draft cd88624e-17e8-4ddd-9356-60c980c1e405 generated from recording e387bda3-1f6c-48a9-8c35-df254ba6f3b1. Reviewer confirmation required before adoption.",
+        "sourceRevision": 1
+      },
+      {
+        "id": "c7756de9-814c-4aa0-9278-010cacbc6fd0",
+        "at": "2026-09-26T10:43:23.032Z",
+        "actor": {
+          "id": "demo-reviewer",
+          "name": "Ananya Rao",
+          "role": "reviewer"
+        },
+        "type": "source_updated",
+        "detail": "Evidence revision 2 saved. Pending proposals require a new review.",
+        "sourceRevision": 2
+      },
+      {
+        "id": "da95ef9d-ab8d-49ff-a10a-082c6137b25e",
+        "at": "2026-09-26T10:45:34.175Z",
+        "actor": {
+          "id": "demo-reviewer",
+          "name": "Ananya Rao",
+          "role": "reviewer"
+        },
+        "type": "analysis_completed",
+        "detail": "Review v1 completed. 7 source references validated.",
+        "sourceRevision": 2,
+        "analysisId": "14a0ef4c-d49d-4622-990a-c6a09606d292"
+      },
+      {
+        "id": "db2cb259-980a-4545-913f-26c1a4e28a58",
+        "at": "2026-09-26T10:48:54.168Z",
+        "actor": {
+          "id": "demo-reviewer",
+          "name": "Ananya Rao",
+          "role": "reviewer"
+        },
+        "type": "source_updated",
+        "detail": "Evidence revision 3 saved. Pending proposals require a new review.",
+        "sourceRevision": 3
+      },
+      {
+        "id": "1bd3612c-980d-45fe-93fe-e3d39e9621b4",
+        "at": "2026-09-26T10:49:25.022Z",
+        "actor": {
+          "id": "demo-reviewer",
+          "name": "Ananya Rao",
+          "role": "reviewer"
+        },
+        "type": "analysis_completed",
+        "detail": "Review v2 completed. 8 source references validated.",
+        "sourceRevision": 3,
+        "analysisId": "65d42a8f-cbaa-4f65-9c4b-db46298e34c8"
+      },
+      {
+        "id": "96cdd6bd-61c3-4fc6-b421-940afc162640",
+        "at": "2026-09-26T10:49:59.914Z",
+        "actor": {
+          "id": "demo-reviewer",
+          "name": "Ananya Rao",
+          "role": "reviewer"
+        },
+        "type": "proposal_created",
+        "detail": "Proposed escalate for supervisor approval.",
+        "sourceRevision": 3,
+        "proposalId": "733c5d8e-d08e-418e-b519-c72874a30ab6",
+        "analysisId": "65d42a8f-cbaa-4f65-9c4b-db46298e34c8"
+      },
+      {
+        "id": "e92da07d-1ea0-45e9-a124-973f9a330243",
+        "at": "2026-09-26T10:51:01.712Z",
+        "actor": {
+          "id": "demo-supervisor",
+          "name": "Vikram Sethi",
+          "role": "supervisor"
+        },
+        "type": "decision_completed",
+        "detail": "Supervisor approved escalate. Local record FU-8799858A saved to Collections investigation.",
+        "sourceRevision": 3,
+        "decisionId": "38af4a3d-7e2c-4c97-a3fc-1fcb9fb7d628",
+        "proposalId": "733c5d8e-d08e-418e-b519-c72874a30ab6",
+        "analysisId": "65d42a8f-cbaa-4f65-9c4b-db46298e34c8"
+      }
+    ],
+    "sourceHistory": [
+      {
+        "revision": 1,
+        "source": {
+          "transcript": [
+            {
+              "id": "T1",
+              "time": "00:00",
+              "speaker": "Unknown",
+              "text": "Synthetic recording awaiting transcription and reviewer inspection."
+            }
+          ],
+          "collectorNote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026. Customer agreed to make an immediate INR 5,000 part-payment. No dispute raised.",
+          "policy": {
+            "version": "DEMO-COL-1.0",
+            "clauses": [
+              {
+                "id": "P1",
+                "title": "Accurate case notes",
+                "text": "A promise to pay must reflect an explicit customer commitment to an amount and a date. Record a disputed amount and a refusal or uncertainty accurately. Do not convert a conditional statement into an unconditional promise."
+              },
+              {
+                "id": "P2",
+                "title": "Approved payment destinations",
+                "text": "Collectors may direct customers only to destinations in the bank-supplied approved directory. A destination absent from a complete supplied directory is a discrepancy for supervisor review, not proof of fraud. If the directory is unavailable or incomplete, request verification."
+              },
+              {
+                "id": "P3",
+                "title": "Respectful treatment",
+                "text": "Collectors must communicate respectfully. Do not threaten public embarrassment, disclosure to unrelated third parties, or consequences unsupported by the supplied case evidence. A routine reminder of an overdue amount is not itself misconduct."
+              },
+              {
+                "id": "P4",
+                "title": "Evidence before conclusions",
+                "text": "Assess only the supplied conversation and records. If a recording excerpt or relevant data is missing, state the limitation. Do not infer payment, agreement, fraud or misconduct from silence or an ambiguous statement."
+              }
+            ]
+          },
+          "directory": {
+            "version": "DEMO-PAY-2026-09",
+            "available": true,
+            "complete": true,
+            "destinations": [
+              "collections@demo-bank",
+              "repay@demo-bank"
+            ]
+          }
+        },
+        "at": "2026-09-26T10:41:53.732Z",
+        "actor": {
+          "id": "demo-reviewer",
+          "name": "Ananya Rao",
+          "role": "reviewer"
+        }
+      },
+      {
+        "revision": 2,
+        "source": {
+          "transcript": [
+            {
+              "id": "T1",
+              "time": "00:00",
+              "speaker": "Collector",
+              "text": "नमस्ते रवि जी मैं डेमो बैंक कलेक्शन से अमित बोल रहा हूँ हमारे रिकॉर्ड में अठारह हज़ार पाँच सौ रुपये ओवरड्यू हैं"
+            },
+            {
+              "id": "T2",
+              "time": "00:06",
+              "speaker": "Customer",
+              "text": "ये अमाउंट सही नहीं लग रहा मेरे हिसाब से पंद्रह हज़ार रुपये बाकी हैं पहले मुझे चार्जेस का ब्रेकडाउन भेजिए"
+            },
+            {
+              "id": "T3",
+              "time": "00:13",
+              "speaker": "Collector",
+              "text": "क्या आप शुक्रवार दो अक्टूबर तक अठारह हज़ार पाँच सौ रुपये पे कर देंगे"
+            },
+            {
+              "id": "T4",
+              "time": "00:17",
+              "speaker": "Customer",
+              "text": "नहीं जब तक चार्जेस क्लियर नहीं होते मैं पेमेंट का प्रॉमिस नहीं कर सकता"
+            },
+            {
+              "id": "T5",
+              "time": "00:22",
+              "speaker": "Collector",
+              "text": "अभी पाँच हज़ार रुपये अमित डॉट कलेक्ट एट पर्सनल डैश पे पर ट्रांसफर कर दीजिए मैं रिकॉर्ड अपडेट कर दूँगा"
+            },
+            {
+              "id": "T6",
+              "time": "00:29",
+              "speaker": "Customer",
+              "text": "क्या ये बैंक का ऑफिशियल पेमेंट एड्रेस है मुझे ऑफिशियल पेमेंट लिंक भेजिए"
+            },
+            {
+              "id": "T7",
+              "time": "00:34",
+              "speaker": "Collector",
+              "text": "अभी जो एड्रेस मैंने बताया उसी पर भेज दीजिए"
+            },
+            {
+              "id": "T8",
+              "time": "00:36",
+              "speaker": "Customer",
+              "text": "मैं अभी कोई पेमेंट नहीं कर रहा हूं पहले स्टेटमेंट और ऑफिशियल पेमेंट डिटेल्स भेजिए"
+            }
+          ],
+          "collectorNote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026. Customer agreed to make an immediate INR 5,000 part-payment. No dispute raised.",
+          "audio": {
+            "recordingId": "e387bda3-1f6c-48a9-8c35-df254ba6f3b1",
+            "transcriptionId": "cd88624e-17e8-4ddd-9356-60c980c1e405"
+          },
+          "policy": {
+            "version": "DEMO-COL-1.0",
+            "clauses": [
+              {
+                "id": "P1",
+                "title": "Accurate case notes",
+                "text": "A promise to pay must reflect an explicit customer commitment to an amount and a date. Record a disputed amount and a refusal or uncertainty accurately. Do not convert a conditional statement into an unconditional promise."
+              },
+              {
+                "id": "P2",
+                "title": "Approved payment destinations",
+                "text": "Collectors may direct customers only to destinations in the bank-supplied approved directory. A destination absent from a complete supplied directory is a discrepancy for supervisor review, not proof of fraud. If the directory is unavailable or incomplete, request verification."
+              },
+              {
+                "id": "P3",
+                "title": "Respectful treatment",
+                "text": "Collectors must communicate respectfully. Do not threaten public embarrassment, disclosure to unrelated third parties, or consequences unsupported by the supplied case evidence. A routine reminder of an overdue amount is not itself misconduct."
+              },
+              {
+                "id": "P4",
+                "title": "Evidence before conclusions",
+                "text": "Assess only the supplied conversation and records. If a recording excerpt or relevant data is missing, state the limitation. Do not infer payment, agreement, fraud or misconduct from silence or an ambiguous statement."
+              }
+            ]
+          },
+          "directory": {
+            "version": "DEMO-PAY-2026-09",
+            "available": true,
+            "complete": true,
+            "destinations": [
+              "collections@demo-bank",
+              "repay@demo-bank"
+            ]
+          }
+        },
+        "at": "2026-09-26T10:43:23.032Z",
+        "actor": {
+          "id": "demo-reviewer",
+          "name": "Ananya Rao",
+          "role": "reviewer"
+        }
+      },
+      {
+        "revision": 3,
+        "source": {
+          "transcript": [
+            {
+              "id": "T1",
+              "time": "00:00",
+              "speaker": "Collector",
+              "text": "नमस्ते रवि जी मैं डेमो बैंक कलेक्शन से अमित बोल रहा हूँ हमारे रिकॉर्ड में अठारह हज़ार पाँच सौ रुपये ओवरड्यू हैं"
+            },
+            {
+              "id": "T2",
+              "time": "00:06",
+              "speaker": "Customer",
+              "text": "ये अमाउंट सही नहीं लग रहा मेरे हिसाब से पंद्रह हज़ार रुपये बाकी हैं पहले मुझे चार्जेस का ब्रेकडाउन भेजिए"
+            },
+            {
+              "id": "T3",
+              "time": "00:13",
+              "speaker": "Collector",
+              "text": "क्या आप शुक्रवार दो अक्टूबर तक अठारह हज़ार पाँच सौ रुपये पे कर देंगे"
+            },
+            {
+              "id": "T4",
+              "time": "00:17",
+              "speaker": "Customer",
+              "text": "नहीं जब तक चार्जेस क्लियर नहीं होते मैं पेमेंट का प्रॉमिस नहीं कर सकता"
+            },
+            {
+              "id": "T5",
+              "time": "00:22",
+              "speaker": "Collector",
+              "text": "अभी पाँच हज़ार रुपये amit.collect@personal-pay पर ट्रांसफर कर दीजिए मैं रिकॉर्ड अपडेट कर दूँगा"
+            },
+            {
+              "id": "T6",
+              "time": "00:29",
+              "speaker": "Customer",
+              "text": "क्या ये बैंक का ऑफिशियल पेमेंट एड्रेस है मुझे ऑफिशियल पेमेंट लिंक भेजिए"
+            },
+            {
+              "id": "T7",
+              "time": "00:34",
+              "speaker": "Collector",
+              "text": "अभी जो एड्रेस मैंने बताया उसी पर भेज दीजिए"
+            },
+            {
+              "id": "T8",
+              "time": "00:36",
+              "speaker": "Customer",
+              "text": "मैं अभी कोई पेमेंट नहीं कर रहा हूं पहले स्टेटमेंट और ऑफिशियल पेमेंट डिटेल्स भेजिए"
+            }
+          ],
+          "collectorNote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026. Customer agreed to make an immediate INR 5,000 part-payment. No dispute raised.",
+          "audio": {
+            "recordingId": "e387bda3-1f6c-48a9-8c35-df254ba6f3b1",
+            "transcriptionId": "cd88624e-17e8-4ddd-9356-60c980c1e405"
+          },
+          "policy": {
+            "version": "DEMO-COL-1.0",
+            "clauses": [
+              {
+                "id": "P1",
+                "title": "Accurate case notes",
+                "text": "A promise to pay must reflect an explicit customer commitment to an amount and a date. Record a disputed amount and a refusal or uncertainty accurately. Do not convert a conditional statement into an unconditional promise."
+              },
+              {
+                "id": "P2",
+                "title": "Approved payment destinations",
+                "text": "Collectors may direct customers only to destinations in the bank-supplied approved directory. A destination absent from a complete supplied directory is a discrepancy for supervisor review, not proof of fraud. If the directory is unavailable or incomplete, request verification."
+              },
+              {
+                "id": "P3",
+                "title": "Respectful treatment",
+                "text": "Collectors must communicate respectfully. Do not threaten public embarrassment, disclosure to unrelated third parties, or consequences unsupported by the supplied case evidence. A routine reminder of an overdue amount is not itself misconduct."
+              },
+              {
+                "id": "P4",
+                "title": "Evidence before conclusions",
+                "text": "Assess only the supplied conversation and records. If a recording excerpt or relevant data is missing, state the limitation. Do not infer payment, agreement, fraud or misconduct from silence or an ambiguous statement."
+              }
+            ]
+          },
+          "directory": {
+            "version": "DEMO-PAY-2026-09",
+            "available": true,
+            "complete": true,
+            "destinations": [
+              "collections@demo-bank",
+              "repay@demo-bank"
+            ]
+          }
+        },
+        "at": "2026-09-26T10:48:54.168Z",
+        "actor": {
+          "id": "demo-reviewer",
+          "name": "Ananya Rao",
+          "role": "reviewer"
+        }
+      }
+    ]
+  },
+  "recordings": [
+    {
+      "id": "e387bda3-1f6c-48a9-8c35-df254ba6f3b1",
+      "caseId": "CR-A2889970",
+      "fileName": "sarvam-hinglish-call.wav",
+      "mimeType": "audio/wav",
+      "bytes": 1353940,
+      "sha256": "96f50b8eb78605bf00685c074725d188dfdcf8ae037ce20c617e4b548aec04c2",
+      "createdAt": "2026-09-26T10:42:07.360Z"
+    }
+  ],
+  "transcriptions": [
+    {
+      "turns": [
+        {
+          "time": "00:00",
+          "speaker": "Unknown",
+          "speakerId": "2",
+          "text": "नमस्ते रवि जी मैं डेमो बैंक कलेक्शन से अमित बोल रहा हूँ हमारे रिकॉर्ड में अठारह हज़ार पाँच सौ रुपये ओवरड्यू हैं"
+        },
+        {
+          "time": "00:06",
+          "speaker": "Unknown",
+          "speakerId": "1",
+          "text": "ये अमाउंट सही नहीं लग रहा मेरे हिसाब से पंद्रह हज़ार रुपये बाकी हैं पहले मुझे चार्जेस का ब्रेकडाउन भेजिए"
+        },
+        {
+          "time": "00:13",
+          "speaker": "Unknown",
+          "speakerId": "2",
+          "text": "क्या आप शुक्रवार दो अक्टूबर तक अठारह हज़ार पाँच सौ रुपये पे कर देंगे"
+        },
+        {
+          "time": "00:17",
+          "speaker": "Unknown",
+          "speakerId": "1",
+          "text": "नहीं जब तक चार्जेस क्लियर नहीं होते मैं पेमेंट का प्रॉमिस नहीं कर सकता"
+        },
+        {
+          "time": "00:22",
+          "speaker": "Unknown",
+          "speakerId": "2",
+          "text": "अभी पाँच हज़ार रुपये अमित डॉट कलेक्ट एट पर्सनल डैश पे पर ट्रांसफर कर दीजिए मैं रिकॉर्ड अपडेट कर दूँगा"
+        },
+        {
+          "time": "00:29",
+          "speaker": "Unknown",
+          "speakerId": "1",
+          "text": "क्या ये बैंक का ऑफिशियल पेमेंट एड्रेस है मुझे ऑफिशियल पेमेंट लिंक भेजिए"
+        },
+        {
+          "time": "00:34",
+          "speaker": "Unknown",
+          "speakerId": "2",
+          "text": "अभी जो एड्रेस मैंने बताया उसी पर भेज दीजिए"
+        },
+        {
+          "time": "00:36",
+          "speaker": "Unknown",
+          "speakerId": "1",
+          "text": "मैं अभी कोई पेमेंट नहीं कर रहा हूं पहले स्टेटमेंट और ऑफिशियल पेमेंट डिटेल्स भेजिए"
+        }
+      ],
+      "warnings": [
+        "Detected language: hi-IN. Sarvam speaker IDs do not establish collector/customer roles. Assign roles after listening.",
+        "Output mode: verbatim. Language hint: hi-IN. Recognition can change scripts, normalise or mishear words. Verify negation, amounts and payment addresses against playback. Segment timestamps are approximate."
+      ],
+      "id": "cd88624e-17e8-4ddd-9356-60c980c1e405",
+      "caseId": "CR-A2889970",
+      "recordingId": "e387bda3-1f6c-48a9-8c35-df254ba6f3b1",
+      "model": "sarvam/saaras:v4",
+      "createdAt": "2026-09-26T10:42:39.596Z",
+      "latencyMs": 4256
+    }
+  ]
+}
