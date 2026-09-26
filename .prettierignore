@@ -1,0 +1,7 @@
+dist
+node_modules
+data
+.env
+.scratch/runtime
+package-lock.json
+docs/verification/*.json

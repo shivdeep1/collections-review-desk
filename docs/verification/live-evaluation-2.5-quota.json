@@ -1,0 +1,257 @@
+{
+  "ranAt": "2026-09-26T08:09:10.779Z",
+  "promptVersion": "collections-review-v4",
+  "scope": "Four synthetic scenarios; one run each. This is a smoke evaluation, not a production accuracy estimate. Only exact citations and supplied policy references are validated mechanically.",
+  "results": [
+    {
+      "scenario": "supported concern",
+      "model": "gemini-2.5-flash",
+      "passed": true,
+      "latencyMs": 10533,
+      "checks": {
+        "note": true,
+        "payment": true,
+        "action": true,
+        "zeroConcernOnClean": true,
+        "supportedConcernLabel": true,
+        "missingEvidenceNamed": true
+      },
+      "assessment": {
+        "summary": "The collector note inaccurately records customer commitments and disputes. The customer explicitly refused to promise payment due to a dispute over the amount and declined to make a part-payment to an unverified address. The collector also recommended a payment destination not found in the approved directory.",
+        "noteAssessment": {
+          "status": "contradicted",
+          "explanation": "The collector note claims the customer promised to pay INR 18,500 and agreed to an immediate INR 5,000 part-payment, and that no dispute was raised. The transcript clearly shows the customer explicitly refusing to promise payment due to an amount dispute and declining to make any payment.",
+          "citations": [
+            {
+              "source": "note",
+              "ref": "note",
+              "quote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026."
+            },
+            {
+              "source": "transcript",
+              "ref": "T4",
+              "quote": "Nahi, pehle charges ka breakup bhejiye. Jab tak amount clear nahi hota, main payment ka promise nahi kar sakta."
+            },
+            {
+              "source": "note",
+              "ref": "note",
+              "quote": "Customer agreed to make an immediate INR 5,000 part-payment."
+            },
+            {
+              "source": "transcript",
+              "ref": "T8",
+              "quote": "Main abhi kuch transfer nahi kar raha. Please statement aur official payment details bhejiye."
+            },
+            {
+              "source": "note",
+              "ref": "note",
+              "quote": "No dispute raised."
+            },
+            {
+              "source": "transcript",
+              "ref": "T2",
+              "quote": "Haan, lekin amount galat lag raha hai. Mere hisaab se 15,000 due hai, 18,500 nahi."
+            }
+          ]
+        },
+        "findings": [
+          {
+            "title": "Inaccurate Recording of Promise to Pay",
+            "category": "note_accuracy",
+            "severity": "concern",
+            "explanation": "The collector note states the customer promised to pay INR 18,500 by a specific date, but the customer explicitly stated they could not promise payment until the amount was clear.",
+            "policyIds": [
+              "P1"
+            ],
+            "citations": [
+              {
+                "source": "note",
+                "ref": "note",
+                "quote": "Customer confirmed a promise to pay INR 18,500 by Friday, 2 October 2026."
+              },
+              {
+                "source": "transcript",
+                "ref": "T4",
+                "quote": "Nahi, pehle charges ka breakup bhejiye. Jab tak amount clear nahi hota, main payment ka promise nahi kar sakta."
+              }
+            ]
+          },
+          {
+            "title": "Inaccurate Recording of Part-Payment Agreement",
+            "category": "note_accuracy",
+            "severity": "concern",
+            "explanation": "The collector note claims the customer agreed to an immediate part-payment, but the customer explicitly refused to transfer any amount and requested official payment details.",
+            "policyIds": [
+              "P1"
+            ],
+            "citations": [
+              {
+                "source": "note",
+                "ref": "note",
+                "quote": "Customer agreed to make an immediate INR 5,000 part-payment."
+              },
+              {
+                "source": "transcript",
+                "ref": "T8",
+                "quote": "Main abhi kuch transfer nahi kar raha. Please statement aur official payment details bhejiye."
+              }
+            ]
+          },
+          {
+            "title": "Inaccurate Recording of Dispute Status",
+            "category": "note_accuracy",
+            "severity": "concern",
+            "explanation": "The collector note states no dispute was raised, but the customer clearly disputed the overdue amount, stating it was incorrect.",
+            "policyIds": [
+              "P1"
+            ],
+            "citations": [
+              {
+                "source": "note",
+                "ref": "note",
+                "quote": "No dispute raised."
+              },
+              {
+                "source": "transcript",
+                "ref": "T2",
+                "quote": "Haan, lekin amount galat lag raha hai. Mere hisaab se 15,000 due hai, 18,500 nahi."
+              }
+            ]
+          },
+          {
+            "title": "Unapproved Payment Destination Recommended",
+            "category": "payment_destination",
+            "severity": "concern",
+            "explanation": "The collector directed the customer to make a payment to 'amit.collect@personal-pay', which is not listed in the bank's approved payment directory.",
+            "policyIds": [
+              "P2"
+            ],
+            "citations": [
+              {
+                "source": "transcript",
+                "ref": "T5",
+                "quote": "Aap filhaal 5,000 amit.collect@personal-pay par transfer kar dijiye, baaki baad mein dekh lenge."
+              }
+            ]
+          }
+        ],
+        "paymentMentions": [
+          {
+            "destination": "amit.collect@personal-pay",
+            "citation": {
+              "source": "transcript",
+              "ref": "T5",
+              "quote": "amit.collect@personal-pay"
+            }
+          }
+        ],
+        "missingEvidence": [],
+        "recommendedAction": "escalate",
+        "recommendationReason": "The collector note contains multiple significant inaccuracies regarding customer commitments and disputes. Additionally, the collector directed the customer to an unapproved payment destination and insisted on it despite the customer's request for official bank details. This requires investigation into collector conduct and training."
+      },
+      "paymentChecks": [
+        {
+          "destination": "amit.collect@personal-pay",
+          "citation": {
+            "source": "transcript",
+            "ref": "T5",
+            "quote": "amit.collect@personal-pay"
+          },
+          "status": "not_listed",
+          "explanation": "Absent from the supplied complete directory. Supervisor review is required; this is not proof of fraud."
+        }
+      ],
+      "validatedCitations": 14
+    },
+    {
+      "scenario": "compliant conversation",
+      "model": "gemini-2.5-flash",
+      "passed": true,
+      "latencyMs": 6719,
+      "checks": {
+        "note": true,
+        "payment": true,
+        "action": true,
+        "zeroConcernOnClean": true,
+        "supportedConcernLabel": true,
+        "missingEvidenceNamed": true
+      },
+      "assessment": {
+        "summary": "The customer confirmed the overdue amount and committed to paying INR 9,200 by 2 October 2026. The collector provided an approved payment destination and recorded the commitment.",
+        "noteAssessment": {
+          "status": "supported",
+          "explanation": "The collector's note accurately reflects the customer's explicit commitment to pay the specified amount by the given date, the provision of the official payment destination, and the customer's confirmation of the amount.",
+          "citations": [
+            {
+              "source": "note",
+              "ref": "note",
+              "quote": "Customer explicitly confirmed INR 9,200 and committed to paying by 2 October 2026."
+            },
+            {
+              "source": "transcript",
+              "ref": "T4",
+              "quote": "I will pay INR 9,200 by 2 October 2026."
+            },
+            {
+              "source": "note",
+              "ref": "note",
+              "quote": "Official destination collections@demo-bank was provided."
+            },
+            {
+              "source": "transcript",
+              "ref": "T5",
+              "quote": "Please use the official payment destination collections@demo-bank."
+            },
+            {
+              "source": "note",
+              "ref": "note",
+              "quote": "Customer raised no amount dispute."
+            },
+            {
+              "source": "transcript",
+              "ref": "T4",
+              "quote": "I have the statement and the amount is correct."
+            }
+          ]
+        },
+        "findings": [],
+        "paymentMentions": [
+          {
+            "destination": "collections@demo-bank",
+            "citation": {
+              "source": "transcript",
+              "ref": "T5",
+              "quote": "Please use the official payment destination collections@demo-bank."
+            }
+          }
+        ],
+        "missingEvidence": [],
+        "recommendedAction": "dismiss",
+        "recommendationReason": "The collector note is accurate, the payment destination is approved, and the conversation was respectful. No policy violations or discrepancies were found."
+      },
+      "paymentChecks": [
+        {
+          "destination": "collections@demo-bank",
+          "citation": {
+            "source": "transcript",
+            "ref": "T5",
+            "quote": "Please use the official payment destination collections@demo-bank."
+          },
+          "status": "listed",
+          "explanation": "Matches a destination in the supplied directory. This does not verify who owns the account."
+        }
+      ],
+      "validatedCitations": 7
+    },
+    {
+      "scenario": "missing prior evidence",
+      "passed": false,
+      "error": "Gemini quota or rate limit reached. Wait before retrying, or check this key’s free-tier quota in AI Studio. No fallback report was generated."
+    },
+    {
+      "scenario": "held-out changed conversation",
+      "passed": false,
+      "error": "Gemini quota or rate limit reached. Wait before retrying, or check this key’s free-tier quota in AI Studio. No fallback report was generated."
+    }
+  ]
+}

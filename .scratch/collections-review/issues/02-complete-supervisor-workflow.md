@@ -1,11 +1,12 @@
 # 02: Complete supervisor workflow
 
-Status: ready-for-agent
+Status: done
 Blocked by: 01
 
 Deliver proposals, supervisor decisions, follow-up records and audit history.
 
-- [ ] Role checks execute on the server.
-- [ ] Changed evidence or analysis invalidates an old proposal.
-- [ ] Repeated approval creates one action.
-- [ ] Saved decisions survive a server restart.
+- [x] Role checks execute on the server.
+- [x] Changed evidence or analysis invalidates an old proposal.
+- [x] Repeated approval creates one action.
+- [x] Saved decisions survive a server restart.
+

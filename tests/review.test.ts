@@ -16,5 +16,7 @@ test('a live-model result is validated, linked to its source revision and retain
     assert.equal(saved.body.analyses.length, 1);
     assert.equal(saved.body.analyses[0].id, result.body.analysis.id);
     assert.equal(saved.body.audit.at(-1).type, 'analysis_completed');
-  } finally { await h.close(); }
+  } finally {
+    await h.close();
+  }
 });

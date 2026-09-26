@@ -13,17 +13,27 @@ test('a supervisor approval creates one persistent follow-up, even when retried 
     await h.login('reviewer');
     const review = await h.request('/cases/CR-1001/analyses', 'POST', { sourceRevision: 1 });
     const proposal = await h.request('/cases/CR-1001/proposals', 'POST', {
-      analysisId: review.body.analysis.id, sourceRevision: 1, action: 'escalate', reason: 'Please investigate the evidence-backed note discrepancy.',
+      analysisId: review.body.analysis.id,
+      sourceRevision: 1,
+      action: 'escalate',
+      reason: 'Please investigate the evidence-backed note discrepancy.',
     });
     assert.equal(proposal.status, 201);
     await h.login('supervisor');
-    const request = { proposalId: proposal.body.proposal.id, reason: 'I checked the refusal and the collector note. Escalate for investigation.', idempotencyKey: 'approval-001' };
+    const request = {
+      proposalId: proposal.body.proposal.id,
+      reason: 'I checked the refusal and the collector note. Escalate for investigation.',
+      idempotencyKey: 'approval-001',
+    };
     const decision = await h.request('/cases/CR-1001/decisions', 'POST', request);
     assert.equal(decision.status, 201);
     const retry = await h.request('/cases/CR-1001/decisions', 'POST', request);
     assert.equal(retry.status, 200);
     assert.equal(retry.body.decision.id, decision.body.decision.id);
-    const secondKey = await h.request('/cases/CR-1001/decisions', 'POST', { ...request, idempotencyKey: 'approval-002' });
+    const secondKey = await h.request('/cases/CR-1001/decisions', 'POST', {
+      ...request,
+      idempotencyKey: 'approval-002',
+    });
     assert.equal(secondKey.body.decision.id, decision.body.decision.id);
     await h.close();
     h = await harness({ databasePath });
@@ -32,8 +42,14 @@ test('a supervisor approval creates one persistent follow-up, even when retried 
     assert.equal(restored.body.status, 'escalated');
     assert.equal(restored.body.decisions.length, 1);
     assert.equal(restored.body.decisions[0].followUp.queue, 'Collections investigation');
-    assert.equal(restored.body.audit.filter((e: { type: string }) => e.type === 'decision_completed').length, 1);
-  } finally { await h.close(); rmSync(directory, { recursive: true, force: true }); }
+    assert.equal(
+      restored.body.audit.filter((e: { type: string }) => e.type === 'decision_completed').length,
+      1,
+    );
+  } finally {
+    await h.close();
+    rmSync(directory, { recursive: true, force: true });
+  }
 });
 
 test('editing a policy invalidates a pending approval while retaining the original review evidence', async () => {
@@ -41,15 +57,25 @@ test('editing a policy invalidates a pending approval while retaining the origin
   try {
     await h.login('reviewer');
     const review = await h.request('/cases/CR-1001/analyses', 'POST', { sourceRevision: 1 });
-    const proposal = await h.request('/cases/CR-1001/proposals', 'POST', { analysisId: review.body.analysis.id, sourceRevision: 1, action: 'escalate', reason: 'Please review the contradictory promise.' });
+    const proposal = await h.request('/cases/CR-1001/proposals', 'POST', {
+      analysisId: review.body.analysis.id,
+      sourceRevision: 1,
+      action: 'escalate',
+      reason: 'Please review the contradictory promise.',
+    });
     const original = await h.request('/cases/CR-1001');
     const source = structuredClone(original.body.source);
     source.policy.version = 'DEMO-COL-2.0';
-    source.policy.clauses[0].text = 'Record customer commitments verbatim and refer ambiguous commitments to a supervisor.';
+    source.policy.clauses[0].text =
+      'Record customer commitments verbatim and refer ambiguous commitments to a supervisor.';
     const edit = await h.request('/cases/CR-1001/source', 'PUT', { expectedRevision: 1, source });
     assert.equal(edit.status, 200);
     await h.login('supervisor');
-    const decision = await h.request('/cases/CR-1001/decisions', 'POST', { proposalId: proposal.body.proposal.id, reason: 'Attempted approval of the old report.', idempotencyKey: 'stale-approval-001' });
+    const decision = await h.request('/cases/CR-1001/decisions', 'POST', {
+      proposalId: proposal.body.proposal.id,
+      reason: 'Attempted approval of the old report.',
+      idempotencyKey: 'stale-approval-001',
+    });
     assert.equal(decision.status, 409);
     assert.equal(decision.body.code, 'STALE_PROPOSAL');
     const saved = await h.request('/cases/CR-1001');
@@ -57,5 +83,7 @@ test('editing a policy invalidates a pending approval while retaining the origin
     assert.equal(saved.body.analyses[0].source.policy.version, 'DEMO-COL-1.0');
     assert.equal(saved.body.decisions.length, 0);
     assert.equal(saved.body.proposals[0].status, 'superseded');
-  } finally { await h.close(); }
+  } finally {
+    await h.close();
+  }
 });
