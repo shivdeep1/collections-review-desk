@@ -7,7 +7,7 @@ if not exist "node_modules" (
 )
 if not exist ".env" (
   copy ".env.example" ".env" >nul
-  echo Add your Gemini API key to .env, save, then run this file again.
+  echo Add your Sarvam API key to .env, save, then run this file again. Gemini is an optional backup.
   exit /b 1
 )
 if not exist "dist\index.html" (

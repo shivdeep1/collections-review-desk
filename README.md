@@ -2,6 +2,8 @@
 
 A working synthetic prototype for bank collections quality teams. It compares a call transcript with the collector's note and a supplied policy, then completes a supervisor-approved case action.
 
+**Hackathon submission:** [one-page PDF](public/collections-review-one-pager.pdf), [editable PowerPoint](public/collections-review-submission.pptx), [demo route](docs/DEMO.md). The local demo already contains a saved Sarvam audio review and supervisor-approved synthetic follow-up.
+
 ## Run locally
 
 Requires Node.js 24 or later. SQLite is built into Node, so no database service is needed.

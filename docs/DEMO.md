@@ -1,65 +1,25 @@
-# Seven-minute demonstration
+# Demo and submission
 
-Use the local app at http://127.0.0.1:4317. Open the one-slide pitch before starting. Leave the API key out of the screen share. All names, loans, policies and conversations in the app are synthetic.
+Open the [one-slide pitch](http://127.0.0.1:4317/pitch.html) and keep the [app](http://127.0.0.1:4317/) in another tab. The evidence, policy, customer and loan are synthetic. The app runs on this laptop; the GitHub link contains source code, not the local database or API keys.
 
-The current laptop already contains rehearsal history. Ravi's report v3 uses the original inaccurate note and the selected Gemini 3 Flash Preview model. Report v2 shows the corrected-note experiment. Report v1 retains the earlier approved follow-up. You can run a new review and complete a fresh decision without deleting this history.
+## The reliable five-minute route
 
-## 0:00–0:45: The task
+1. **Problem, 30 seconds.** “The collector note says the customer promised to pay. The customer actually disputes the amount and refuses to commit. A supervisor needs the call, the note and the bank's own policy before acting.”
+2. **Audio evidence, 60 seconds.** Open **Ravi Mehta · Sarvam Hinglish**. Show the linked 42-second recording, play the refusal at **00:17**, and point to the collector's payment instruction at **00:22**. In **Audio evidence**, show Saaras's draft, the reviewer-assigned Collector/Customer roles and the corrected address. The accepted transcript is source revision 3. Close the modal without transcribing again.
+3. **Review, 90 seconds.** The saved **report v3** was produced by **sarvam/sarvam-105b** from that accepted transcript. Click the refusal quotation to jump to its turn and playback. Show that code checked 20 exact references and compared `amit.collect@personal-pay` with the supplied complete directory. Say “absent from this supplied directory,” never “fraud proved.” Sarvam repeated related issues across eight findings; the reviewer and supervisor condensed them to the two material concerns in their reasons.
+4. **Completed service, 60 seconds.** Scroll to **Decision saved**. The reviewer proposed investigation, the supervisor approved it, and the app created local follow-up **FU-96254B35**. Open the audit record and show the saved evidence revision, report and human decision. This is a simulated bank queue; it sent no bank message or payment instruction.
+5. **Deployment, 45 seconds.** “For a bank pilot, ingest consented historical calls and case exports, review alongside supervisors, measure missed concerns and false alarms, then integrate the existing collections case system. Put the model in an approved environment with staff authentication and retention controls.”
 
-“A collector records that a customer promised to pay. But the customer actually disputed the amount. The supervisor has to compare the conversation, the case note and bank policy, then record a defensible next step. This desk completes that review workflow.”
+The report and decision above are saved from a real earlier API run. Do not call them a fresh live result. Transcription and review buttons send new billable requests and are optional for the pitch. A later Sarvam rerun produced an unsupported citation and the server refused to save it; the earlier valid report and decision remained intact. If judges request a fresh run, say that provider responses can fail validation and show the error and retry behavior honestly. Gemini is an explicit backup in the model selector.
 
-Explain that funded vendors such as Credgenics and Convin already sell into collections and BFSI call quality. This validates spending in the category. It does not establish that this prototype is unique or that ICICI lacks such tools.
+## What to submit
 
-## 0:45–2:15: Evidence and live review
+- Public code: [github.com/shivdeep1/collections-review-desk](https://github.com/shivdeep1/collections-review-desk).
+- Upload: [one-page PDF](../public/collections-review-one-pager.pdf). It is one page and under 5 MB.
+- Editable slide: [PowerPoint](../public/collections-review-submission.pptx).
 
-For the audio version, use **Ravi Mehta · Sarvam Hinglish** and follow [the audio guide](AUDIO_DEMO.md). The sample's accepted transcript is already in that case. Show playback, the accepted Collector/Customer roles and the corrected payment address, then run a new review with Sarvam 105B. The original text case is separate.
+The four-case smoke evaluation uses synthetic text scenarios and is recorded in [live-evaluation.json](verification/live-evaluation.json). It does not establish production accuracy. The local app database is excluded from Git, so judges browsing the repo must run the app and create or import synthetic evidence; the saved audio-case report and decision are demonstrated on this laptop.
 
-Open Ravi Mehta. Show the collector note first. Then point to the customer's refusal. Run a new AI review. The selected Sarvam 105B request normally takes several seconds. The elapsed indicator is real. Gemini can be selected manually if Sarvam is unavailable.
+## Commercial context
 
-The report should identify the note discrepancy and the collector's proposed payment destination. Click a quote to locate it in the transcript. Open the policy tab. Explain that the code checks exact quotations and directory membership; the model interprets the conversation.
-
-Say “absent from the supplied directory,” not “proven fraudulent.”
-
-## 2:15–3:30: The result responds to the inputs
-
-Choose Edit inputs. For a short change, replace the collector note with:
-
-> Customer disputed the INR 18,500 amount and did not promise to pay. Customer refused an immediate transfer and requested a statement and official payment details. Collector suggested amit.collect@personal-pay, which requires verification against the bank directory.
-
-Save a new revision and run a new review. The inaccurate-promise finding should disappear or change because the corrected note now describes the conversation. The payment-destination concern should remain. Use the report selector to show that the earlier report retains its original evidence.
-
-For a complete clean-input demonstration, use Nisha's case. Changing only one detail does not make all other concerns disappear.
-
-## 3:30–5:00: Complete the service
-
-Choose the appropriate next step and write your own reviewer reason. For example:
-
-> Investigate the payment destination cited at 00:36 against the complete supplied directory. The corrected note acknowledges the customer's dispute.
-
-Send for supervisor approval. Switch to the explicitly labelled supervisor demo persona. Record why the action is appropriate and approve. Show the saved follow-up ID, queue and audit event. Reload and reopen the case to show that the action persists.
-
-If this report already has a completed decision from rehearsal, run a new review first. Completed decisions remain immutable.
-
-## 5:00–6:00: Clean and ambiguous inputs
-
-Nisha's conversation supports its note and uses a listed destination. Farah's conversation does not establish a definite commitment and lacks the earlier recording and directory. The model should name those gaps rather than invent misconduct.
-
-The evaluation file records actual results for these cases and a held-out changed conversation. It is a small smoke evaluation, not a production accuracy claim.
-
-## 6:00–7:00: Bank deployment
-
-“The app already saves the review, approval and follow-up. For a bank pilot, we would connect its existing call transcripts and case exports, use an approved model environment and authenticated staff roles, and measure missed concerns, false alarms and supervisor review time.”
-
-Your NPCI and Airlock experience supports the focus on controlled actions: the proposed action has an owner, exact evidence, approval and a completion record. This is a bank collections workflow; it does not depend on an NPCI integration.
-
-## If the network or free quota fails
-
-The app displays the actual error and preserves the existing records. You may show an earlier saved report and clearly call it a previous live run. Do not present a saved report as a fresh result. Avoid rerunning all evaluation cases immediately before presenting if free-tier quota is limited.
-
-## Sources for the commercial context
-
-- [Credgenics: $50 million Series B and named bank clients](https://www.credgenics.com/credgenics-raises-50-mn-funding-in-series-b)
-- [Convin: Kotak Life call-audit case study](https://www.convin.ai/en-us/case-studies/how-kotak-life-scaled-call-audits-from-5-to-100-with-agentic-ai)
-- [Kalaari: Convin's $6.5 million Series A](https://kalaari.com/insights-from-the-fronlines/convin-raises-6-5-million-series-a-2)
-
-Vendor statements support category validation. They are not measured results from this prototype or endorsements of it.
+[Credgenics](https://www.credgenics.com/credgenics-raises-50-mn-funding-in-series-b) names ICICI among bank clients and reports a $50 million Series B. [Convin](https://www.convin.ai/en-us/case-studies/how-kotak-life-scaled-call-audits-from-5-to-100-with-agentic-ai) publishes a Kotak Life call-audit deployment. These vendor statements establish that banks and insurers buy in this category; they are not endorsements of this prototype.
